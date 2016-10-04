@@ -2,9 +2,11 @@
   "name": "idea-box",
   "version": "1.0.0",
   "description": "Refactor of Idea Box",
-  "main": "index.js",
+  "main": "scripts.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --hot --inline",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -18,8 +20,10 @@
   "homepage": "https://github.com/gprocell927/2DoBox-Pivot#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "jquery": "^3.1.1",
     "mocha": "^3.1.0",
     "mocha-loader": "^1.0.0",
+    "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
   }
 }
