@@ -228,3 +228,7 @@ header input {
     padding-top: 4px;
   }
 }
+
+.completed {
+  text-decoration: line-through;
+}
