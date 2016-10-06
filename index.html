@@ -6,26 +6,33 @@
     <link rel="stylesheet" type="text/css" href="./css/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
   </head>
-
-  <header>
-    <h1><span class = "idea-text">idea</span><span class = "box-text">box</span></h1>
-
-    <form class="idea-form">
+  <body>
+    <header>
+      <h1>
+        <span class ="idea-text">idea</span><span class ="box-text">box</span>
+      </h1>
+      <form class="idea-form">
         <input type="text" id="title-input" placeholder="Title">
         <input type="text" id="body-input" placeholder="Body">
-        <button type="button" id="save-button">save</button>
-        <button type="button" id="completed-button">completed</button>
-
-    </form>
-  </header>
-
-  <body>
-    <section class = "search">
+        <button type="button" id="btn-save" class="btn-header">save</button>
+      </form>
+    </header>
+    <main>
+      <nav>
+        <button type="button" id="btn-nextTen" class="btn-body">next 10</button>
+        <button type="button" id="btn-completed" class="btn-body">Completed</button>
+        <button type="button" id="btn-critical" class="btn-body">Critical</button>
+        <button type="button" id="btn-high" class="btn-body">High</button>
+        <button type="button" id="btn-normal" class="btn-body">Normal</button>
+        <button type="button" id="btn-low" class="btn-body">Low</button>
+        <button type="button" id="btn-none" class="btn-body">None</button>
+      </nav>
       <input id="search-bar" type="text"  placeholder="Search">
-    </section>
-
-    <section class="idea-list">
-    </section>
+      <section class = "search">
+      </section>
+      <section class="idea-list">
+      </section>
+    </main>
+    <script src="main.bundle.js"></script>
   </body>
-  <script src="main.bundle.js"></script>
 </html>

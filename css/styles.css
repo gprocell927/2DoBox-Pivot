@@ -1,3 +1,6 @@
+/*** body ***/
+
+
 header {
   background-color: #E5F3F2;
 }
@@ -9,21 +12,52 @@ header h1, span {
   text-align: center;
 }
 
+header input {
+  height: 20px;
+  width: 500px;
+  position: absolute;
+}
+
 span {
   margin: 30px 0;
   display: inline-block;
   color: #6D6E71
 }
 
-.idea-text {
-  color: #00A79D;
-  margin: bottom: 20px;
+::-webkit-input-placeholder {
+  font-size: 14px;
 }
 
-header input {
-  height: 20px;
-  width: 400px;
-  position: absolute;
+.body-input {
+  font-family: 'Open Sans', sans-serif;
+  color: #939598;
+  font-size: 14px;
+  margin: 10px auto;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+
+
+.btn-header{
+  background-color:#00A79D;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 14px;
+  height: 30px;
+  margin-bottom: 20px;
+  position: relative;
+  text-align: center;
+  top: 95px;
+  width: 406px;
+}
+
+.btn-header:hover{
+  background-color:#045E55;
+}
+
+.completed {
+  text-decoration: line-through;
 }
 
 .idea-form {
@@ -33,17 +67,19 @@ header input {
   display: -webkit-flex;
   -webkit-justify-content: center;
   justify-content: center;
-  margin-bottom: 25px;
 }
 
-::-webkit-input-placeholder {
-  font-size: 14px;
+.idea-text {
+  color: #00A79D;
+  margin: bottom: 20px;
 }
 
 #title-input, #body-input, #search-bar {
   width: 400px;
   display: block;
   margin: auto;
+  /*padding: 0;
+  margin: 0;*/
 }
 
 #body-input {
@@ -52,46 +88,63 @@ header input {
   height: 20px;
 }
 
-#save-button{
-  position: relative;
-  top: 95px;
-  border: none;
-  width: 406px;
-  text-align: center;
+/*** main ***/
+
+li {
+ margin: auto;
+ list-style: none;
+ width: 400px;
+ padding: 20px 0;
+ border-bottom: 2px solid #D1D3D4;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  /*position: relative;*/
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-body{
+  /*position: relative;*/
   background-color:#00A79D;
-  height: 30px;
+  border: none;
+  /*width: 406px;*/
   color: #FFFFFF;
   cursor: pointer;
   font-size: 14px;
+  height: 30px;
+  margin: 0px 5px 20px;
+  padding: 0;
+  text-align: center;
+  top: 95px;
 }
 
-#save-button:hover{
+.btn-body:hover{
   background-color:#045E55;
 }
 
-#search-bar {
-  height: 20px;
-  margin-bottom: 20px;
+.completed-todo{
+  display: inline-block;
+  margin: 0px 10px;
+  float: right;
 }
 
-/*________________________________*/
-
- li {
-   margin: auto;
-   list-style: none;
-   width: 400px;
-   padding: 20px 0;
-   border-bottom: 2px solid #D1D3D4;
- }
-
-.idea-title {
-  font-family: 'Roboto Slab', serif;
-  color: #6D6E71;
-  font-size: 18px;
-  line-height: 1.25;
+.delete-idea, .upvote, .downvote, .completed-todo {
+  height: 20px;
+  width: 20px;
   display: inline-block;
-  max-width: 250px;
-  word-wrap: break-word;
+  vertical-align: bottom;
+  border: none;
+  cursor: pointer;
 }
 
 .delete-idea {
@@ -105,33 +158,30 @@ header input {
   background: url('../images/svg-images/delete-hover.svg')
 }
 
-.body-input {
-  font-family: 'Open Sans', sans-serif;
-  color: #939598;
-  font-size: 14px;
-  margin: 10px auto;
+.downvote {
+  background: url('../images/svg-images/downvote.svg') no-repeat;
+  margin-right: 12px;
+}
+
+.downvote:hover {
+  background: url('../images/svg-images/downvote-hover.svg')
+}
+
+.idea-title {
+  font-family: 'Roboto Slab', serif;
+  color: #6D6E71;
+  font-size: 18px;
+  line-height: 1.25;
+  display: inline-block;
+  max-width: 250px;
   word-wrap: break-word;
-  line-height: 1.5;
 }
 
-.delete-idea, .upvote, .downvote, .completed-todo {
-  height: 20px;
-  width: 20px;
-  display: inline-block;
-  vertical-align: bottom;
-  border: none;
-  cursor: pointer;
-}
-
-.completed-todo{
-  display: inline-block;
-  margin: 0px 10px;
-  float: right;
-}
-
-.vote {
-  width: auto;
-  display: inline-flex;
+.quality-control {
+  font-family: 'Roboto Slab', serif;
+  color: #6D6E71;
+  font-size: 12px;
+  padding-top: 2px;
 }
 
 .upvote {
@@ -143,42 +193,43 @@ header input {
   background: url('../images/svg-images/upvote-hover.svg')
 }
 
-.downvote {
-  background: url('../images/svg-images/downvote.svg') no-repeat;
-  margin-right: 12px;
+.vote {
+  width: auto;
+  display: inline-flex;
 }
 
-.downvote:hover {
-  background: url('../images/svg-images/downvote-hover.svg')
-}
-
-.quality-control {
-  font-family: 'Roboto Slab', serif;
-  color: #6D6E71;
-  font-size: 12px;
-  padding-top: 2px;
+#search-bar {
+  width: 400px;
+  display: block;
+  margin: auto;
+  /*padding: 0;
+  margin: 0;*/
+  height: 20px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 440px) {
+
+/*** header ***/
   header h1, span {
     font-size: 30px;
-  }
-
-  span {
-    margin: 20px 0;
   }
 
   header input {
     width: 300px;
   }
 
-  .idea-form {
-    height: 195px;
+  span {
+    margin: 20px 0;
   }
 
   ::-webkit-input-placeholder {
     font-size: 16px;
     padding: 0;
+  }
+
+  .idea-form {
+    height: 195px;
   }
 
   #title-input, #body-input, #search-bar {
@@ -191,27 +242,15 @@ header input {
     height: 60px;
   }
 
-  #save-button{
+  #btn-save {
     width: 306px;
     font-size: 16px;
     top: 135px;
   }
 
-  /*________________________*/
+  /*** main ***/
   li {
     width: 300px;
-  }
-
-  .idea-title {
-    font-size: 20px;
-    max-width: 150px;
-  }
-
-  .delete-idea {
-    background: url('../images/svg-images/delete.svg') no-repeat;
-    display: inline-block;
-    margin: 0px 10px;
-    float: right;
   }
 
   .body-input {
@@ -223,12 +262,20 @@ header input {
     width: 22px;
   }
 
+  .delete-idea {
+    background: url('../images/svg-images/delete.svg') no-repeat;
+    display: inline-block;
+    margin: 0px 10px;
+    float: right;
+  }
+
+  .idea-title {
+    font-size: 20px;
+    max-width: 150px;
+  }
+
   .quality-control {
     font-size: 14px;
     padding-top: 4px;
   }
-}
-
-.completed {
-  text-decoration: line-through;
 }
