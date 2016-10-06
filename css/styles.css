@@ -9,47 +9,20 @@ header h1, span {
   text-align: center;
 }
 
-span {
-  margin: 30px 0;
-  display: inline-block;
-  color: #6D6E71
-}
-
-.idea-text {
-  color: #00A79D;
-  margin: bottom: 20px;
-}
-
 header input {
   height: 20px;
   width: 400px;
   position: absolute;
 }
 
-.idea-form {
-  background-color: #E5F3F2;
-  position: relative;
-  height: 155px;
-  display: -webkit-flex;
-  -webkit-justify-content: center;
-  justify-content: center;
-  margin-bottom: 25px;
+span {
+  margin: 30px 0;
+  display: inline-block;
+  color: #6D6E71
 }
 
 ::-webkit-input-placeholder {
   font-size: 14px;
-}
-
-#title-input, #body-input, #search-bar {
-  width: 400px;
-  display: block;
-  margin: auto;
-}
-
-#body-input {
-  top: 45px;
-  width: 400px;
-  height: 20px;
 }
 
 .btn-header{
@@ -69,6 +42,39 @@ header input {
 .btn-header:hover{
   background-color:#045E55;
 }
+
+.completed {
+  text-decoration: line-through;
+}
+
+.idea-form {
+  background-color: #E5F3F2;
+  position: relative;
+  height: 155px;
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.idea-text {
+  color: #00A79D;
+  margin: bottom: 20px;
+}
+
+
+#title-input, #body-input, #search-bar {
+  width: 400px;
+  display: block;
+  margin: auto;
+}
+
+#body-input {
+  top: 45px;
+  width: 400px;
+  height: 20px;
+}
+
 
 #search-bar {
   height: 20px;
@@ -192,7 +198,7 @@ header input {
     height: 60px;
   }
 
-  #save-button {
+  #btn-save {
     width: 306px;
     font-size: 16px;
     top: 135px;
@@ -228,8 +234,4 @@ header input {
     font-size: 14px;
     padding-top: 4px;
   }
-}
-
-.completed {
-  text-decoration: line-through;
 }
