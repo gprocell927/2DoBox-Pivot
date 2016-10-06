@@ -1,3 +1,5 @@
+/*** body ***/
+
 header {
   background-color: #E5F3F2;
 }
@@ -54,7 +56,6 @@ span {
   display: -webkit-flex;
   -webkit-justify-content: center;
   justify-content: center;
-  margin-bottom: 25px;
 }
 
 .idea-text {
@@ -67,6 +68,8 @@ span {
   width: 400px;
   display: block;
   margin: auto;
+  /*padding: 0;
+  margin: 0;*/
 }
 
 #body-input {
@@ -81,15 +84,15 @@ span {
   margin-bottom: 20px;
 }
 
-/*________________________________*/
+/*** main ***/
 
- li {
-   margin: auto;
-   list-style: none;
-   width: 400px;
-   padding: 20px 0;
-   border-bottom: 2px solid #D1D3D4;
- }
+li {
+ margin: auto;
+ list-style: none;
+ width: 400px;
+ padding: 20px 0;
+ border-bottom: 2px solid #D1D3D4;
+}
 
 .idea-title {
   font-family: 'Roboto Slab', serif;
@@ -167,25 +170,27 @@ span {
 }
 
 @media (max-width: 440px) {
+
+/*** header ***/
   header h1, span {
     font-size: 30px;
-  }
-
-  span {
-    margin: 20px 0;
   }
 
   header input {
     width: 300px;
   }
 
-  .idea-form {
-    height: 195px;
+  span {
+    margin: 20px 0;
   }
 
   ::-webkit-input-placeholder {
     font-size: 16px;
     padding: 0;
+  }
+
+  .idea-form {
+    height: 195px;
   }
 
   #title-input, #body-input, #search-bar {
@@ -204,7 +209,7 @@ span {
     top: 135px;
   }
 
-  /*________________________*/
+  /*** main ***/
   li {
     width: 300px;
   }
