@@ -78,7 +78,6 @@ span {
   height: 20px;
 }
 
-
 #search-bar {
   height: 20px;
   margin-bottom: 20px;
@@ -94,14 +93,46 @@ li {
  border-bottom: 2px solid #D1D3D4;
 }
 
-.idea-title {
-  font-family: 'Roboto Slab', serif;
-  color: #6D6E71;
-  font-size: 18px;
-  line-height: 1.25;
-  display: inline-block;
-  max-width: 250px;
+.body-input {
+  font-family: 'Open Sans', sans-serif;
+  color: #939598;
+  font-size: 14px;
+  margin: 10px auto;
   word-wrap: break-word;
+  line-height: 1.5;
+}
+
+.btn-header{
+  position: relative;
+  top: 95px;
+  border: none;
+  width: 406px;
+  text-align: center;
+  background-color:#00A79D;
+  height: 30px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.btn-header:hover{
+  background-color:#045E55;
+}
+
+.completed-todo{
+  display: inline-block;
+  margin: 0px 10px;
+  float: right;
+}
+
+.delete-idea, .upvote, .downvote, .completed-todo {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: bottom;
+  border: none;
+  cursor: pointer;
 }
 
 .delete-idea {
@@ -115,33 +146,30 @@ li {
   background: url('../images/svg-images/delete-hover.svg')
 }
 
-.body-input {
-  font-family: 'Open Sans', sans-serif;
-  color: #939598;
-  font-size: 14px;
-  margin: 10px auto;
+.downvote {
+  background: url('../images/svg-images/downvote.svg') no-repeat;
+  margin-right: 12px;
+}
+
+.downvote:hover {
+  background: url('../images/svg-images/downvote-hover.svg')
+}
+
+.idea-title {
+  font-family: 'Roboto Slab', serif;
+  color: #6D6E71;
+  font-size: 18px;
+  line-height: 1.25;
+  display: inline-block;
+  max-width: 250px;
   word-wrap: break-word;
-  line-height: 1.5;
 }
 
-.delete-idea, .upvote, .downvote, .completed-todo {
-  height: 20px;
-  width: 20px;
-  display: inline-block;
-  vertical-align: bottom;
-  border: none;
-  cursor: pointer;
-}
-
-.completed-todo{
-  display: inline-block;
-  margin: 0px 10px;
-  float: right;
-}
-
-.vote {
-  width: auto;
-  display: inline-flex;
+.quality-control {
+  font-family: 'Roboto Slab', serif;
+  color: #6D6E71;
+  font-size: 12px;
+  padding-top: 2px;
 }
 
 .upvote {
@@ -153,20 +181,9 @@ li {
   background: url('../images/svg-images/upvote-hover.svg')
 }
 
-.downvote {
-  background: url('../images/svg-images/downvote.svg') no-repeat;
-  margin-right: 12px;
-}
-
-.downvote:hover {
-  background: url('../images/svg-images/downvote-hover.svg')
-}
-
-.quality-control {
-  font-family: 'Roboto Slab', serif;
-  color: #6D6E71;
-  font-size: 12px;
-  padding-top: 2px;
+.vote {
+  width: auto;
+  display: inline-flex;
 }
 
 @media (max-width: 440px) {
@@ -214,9 +231,13 @@ li {
     width: 300px;
   }
 
-  .idea-title {
-    font-size: 20px;
-    max-width: 150px;
+  .body-input {
+    font-size: 16px;
+  }
+
+  .delete-idea, .upvote, .downvote {
+    height: 22px;
+    width: 22px;
   }
 
   .delete-idea {
@@ -226,13 +247,9 @@ li {
     float: right;
   }
 
-  .body-input {
-    font-size: 16px;
-  }
-
-  .delete-idea, .upvote, .downvote {
-    height: 22px;
-    width: 22px;
+  .idea-title {
+    font-size: 20px;
+    max-width: 150px;
   }
 
   .quality-control {
