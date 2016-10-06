@@ -44,7 +44,7 @@ exports.config = {
         // 5 instance gets started at a time.
         maxInstances: 5,
         //
-        browserName: 'Chrome'
+        browserName: 'chrome'
     }],
     //
     // ===================
@@ -183,4 +183,4 @@ exports.config = {
     // possible to defer the end of the process using a promise.
     // onComplete: function(exitCode) {
     // }
-}
+};
