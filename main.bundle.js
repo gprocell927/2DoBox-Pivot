@@ -98,7 +98,6 @@
 	  idea.completed = true;
 	}
 	function renderCompletedIdeaToHTML(idea) {
-	  // strikeThroughText(idea);
 
 	  $('.idea-list').prepend(
 	    `<li id=${idea.id} class="list-li completed" data-completed=true >
@@ -118,7 +117,6 @@
 
 
 	  function renderUncompletedIdeaToHTML(idea) {
-	  // strikeThroughText(idea)
 
 	  $('.idea-list').prepend(
 	    `<li id=${idea.id} class="list-li">
@@ -186,6 +184,11 @@
 	  $('.list-li').remove();
 	  numIdeas();
 	  end = end + 10;
+	});
+
+	$('#btn-critical').on('click', function(){
+	  $('.list-li').remove();
+	  //when clicked, remove current todos
 	});
 
 
