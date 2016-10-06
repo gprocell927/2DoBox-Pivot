@@ -32,9 +32,33 @@ describe('attributes on our application', function (){
     assert.equal(todoTitle.getValue(), 'great title');
     assert.equal(todoDescription.getValue(), 'great description');
 
-    browser.click('#save-button');
+    browser.click('#btn-save');
 
-    var allTodos = browser.getText('li');
-    assert.equal(allTodos.replace(/\n/g, ", "), 'great title, great description');
+    var todoTitleText = browser.getText('.idea-title');
+    var todoBodyText =
+    browser.getText('.body-input');
+    assert.equal(todoTitleText, 'great title'); assert.equal(todoBodyText,'great description');
+  });
+});
+
+describe('voting attributes', function (){
+
+  it('should have a button that changes a toDos importance to critical', function() {
+    browser.url('/');
+    browser.localStorage('DELETE');
+    browser.refresh();
+    var todoTitle = browser.element("#title-input");
+    var todoDescription = browser.element("#body-input");
+
+    todoTitle.setValue('great title');
+    todoDescription.setValue('great description');
+    browser.click('#btn-save');
+
+    var upvoteTodo = browser.getText('.quality-control');
+
+    browser.click('.upvote');
+    browser.click('.upvote');
+
+    assert.equal(upvoteTodo, 'quality: Critical');
   });
 });
