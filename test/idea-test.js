@@ -51,7 +51,39 @@ describe ('Idea', function () {
     var idea = new Idea();
     assert.equal(idea.id, Date.now());
   });
+});
 
+describe ('functions of Idea', function () {
+
+  it('should have a function called "markAsComplete"', function() {
+    var idea = new Idea();
+    assert.isFunction(idea.markAsComplete);
+  });
+
+  it('"markAsComplete" should change the completed attribute to be true', function (){
+    var idea = new Idea();
+    idea.markAsComplete();
+    assert(idea.completed,true);
+  });
+
+  it('has a function called "renderUncompletedIdeaToHTML"', function() {
+    var idea = new Idea();
+    assert.isFunction(idea.renderUncompletedIdeaToHTML);
+  });
+
+  it('has a function called "renderCompletedIdeaToHTML"', function (){
+    var idea = new Idea();
+    assert.isFunction(idea.renderCompletedIdeaToHTML);
+  });
+
+  it('has a function called "updateBody"', function(){
+    var idea = new Idea();
+    assert.isFunction(idea.updateBody);
+  });
+
+  it('"updateBody" should be able to change the body text', function(){
+    var idea = new Idea();
+  });
 
 
 });
