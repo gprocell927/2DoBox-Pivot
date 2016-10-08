@@ -29,16 +29,11 @@ describe('attributes on our application', function (){
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');
 
+    browser.click('#btn-save');
+
     assert.equal(todoTitle.getValue(), 'great title');
     assert.equal(todoDescription.getValue(), 'great description');
 
-    browser.click('#btn-save');
-
-    var todoTitleText = browser.getText('.idea-title');
-    var todoBodyText =
-    browser.getText('.body-input');
-    assert.equal(todoTitleText, 'great title'); assert.equal(todoBodyText,'great description');
-  });
 });
 
 describe('voting attributes', function (){
@@ -54,11 +49,12 @@ describe('voting attributes', function (){
     todoDescription.setValue('great description');
     browser.click('#btn-save');
 
-    var upvoteTodo = browser.getText('.quality-control');
+    var upvoteTodo = browser.getValue('.quality-control');
 
     browser.click('.upvote');
     browser.click('.upvote');
 
     assert.equal(upvoteTodo, 'quality: Critical');
   });
+});
 });
