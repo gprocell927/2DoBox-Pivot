@@ -58,13 +58,13 @@
 	var $ = __webpack_require__(2);
 	var end = 10;
 
-	function Idea(title, body, id, quality, completed) {
-	  this.id = id || Date.now() ;
-	  this.title = title;
-	  this.body = body;
-	  this.quality = quality || 'Normal';
-	  this.completed = false;
-	}
+	//(idea) function Idea(title, body, id, quality, completed) {
+	//   this.id = id || Date.now() ;
+	//   this.title = title;
+	//   this.body = body;
+	//   this.quality = quality || 'Normal';
+	//   this.completed = false;
+	// }
 
 	function clearFields() {
 	  $('#title-input').val('');
@@ -94,45 +94,44 @@
 	  clearFields();
 	}
 
-	function markAsComplete(idea){
-	  idea.completed = true;
-	}
-	function renderCompletedIdeaToHTML(idea) {
+	// (idea)function markAsComplete(idea){
+	//   idea.completed = true;
+	// }
+	// function renderCompletedIdeaToHTML(idea) {
+	//
+	//   $('.idea-list').prepend(
+	//     `<li id=${idea.id} class="list-li completed" data-completed=true >
+	//     <h3 contenteditable="true" class="idea-title completed">${idea.title}</h3>
+	//     <button class="delete-idea"></button>
+	//     <p contenteditable="true" class="body-input"> ${idea.body}</p>
+	//     <section class="completed">
+	//     <button class="completed-todo">COMPLETE</button>
+	//     </section>
+	//     <section class="vote">
+	//     <button class="upvote"></button>
+	//     <article class="downvote"></article>
+	//     <p class="quality-control">quality: ${idea.quality}</p>
+	//     </section>
+	//     </li>`);
+	//   }
 
-	  $('.idea-list').prepend(
-	    `<li id=${idea.id} class="list-li completed" data-completed=true >
-	    <h3 contenteditable="true" class="idea-title completed">${idea.title}</h3>
-	    <button class="delete-idea"></button>
-	    <p contenteditable="true" class="body-input"> ${idea.body}</p>
-	    <section class="completed">
-	    <button class="completed-todo">COMPLETE</button>
-	    </section>
-	    <section class="vote">
-	    <button class="upvote"></button>
-	    <article class="downvote"></article>
-	    <p class="quality-control">quality: ${idea.quality}</p>
-	    </section>
-	    </li>`);
-	  }
-
-
-	  function renderUncompletedIdeaToHTML(idea) {
-
-	  $('.idea-list').prepend(
-	    `<li id=${idea.id} class="list-li">
-	    <h3 contenteditable="true" class="idea-title">${idea.title}</h3>
-	    <button class="delete-idea"></button>
-	    <p contenteditable="true" class="body-input"> ${idea.body}</p>
-	    <section class="completed">
-	    <button class="completed-todo">COMPLETE</button>
-	    </section>
-	    <section class="vote">
-	    <button class="upvote"></button>
-	    <article class="downvote"></article>
-	    <p class="quality-control">quality: ${idea.quality}</p>
-	    </section>
-	    </li>`);
-	  }
+	  // (idea)function renderUncompletedIdeaToHTML(idea) {
+	  //
+	  // $('.idea-list').prepend(
+	  //   `<li id=${idea.id} class="list-li">
+	  //   <h3 contenteditable="true" class="idea-title">${idea.title}</h3>
+	  //   <button class="delete-idea"></button>
+	  //   <p contenteditable="true" class="body-input"> ${idea.body}</p>
+	  //   <section class="completed">
+	  //   <button class="completed-todo">COMPLETE</button>
+	  //   </section>
+	  //   <section class="vote">
+	  //   <button class="upvote"></button>
+	  //   <article class="downvote"></article>
+	  //   <p class="quality-control">quality: ${idea.quality}</p>
+	  //   </section>
+	  //   </li>`);
+	  // }
 
 	function storeIdea() {
 	  localStorage.setItem("ideasList", JSON.stringify(ideasList));
@@ -166,17 +165,20 @@
 	function numIdeas() {
 	  var numIdeas = ideasList.length;
 	  var begin = 0;
-	  // var end = 10;
-
-	  //the button is clicked again add 10 the end variable
 
 	  slicedIdeas = ideasList.slice(begin, end);
 	  writeIdeas(slicedIdeas);
 	}
-
+	$('#title-input').on('keypress', function() {
+	  if ($(this).val() === "" || $(this).val().length > 120){
+	    $('#btn-save').prop('disabled', true);
+	  }else {    $('#btn-save').prop('disabled', false);
+	}
+	});
 	$(document).ready(function() {
 	  ideasList = JSON.parse(localStorage.getItem('ideasList')) || [];
-	  //find ideas that are not completed
+	  // disable submit button
+	  $('#btn-save').prop('disabled', true);
 	  writeIdeas(ideasList);
 	});
 
@@ -186,9 +188,18 @@
 	  end = end + 10;
 	});
 
+	// (idea)function criticalIdeas(idea){
+	//   return idea.quality === 'Critical';
+	// }
+
 	$('#btn-critical').on('click', function(){
 	  $('.list-li').remove();
 	  //when clicked, remove current todos
+	  criticalIdeas =ideasList.filter(criticalIdeas)
+	  writeIdeas(criticalIdeas);
+	  //filter through todos
+	  //return critical ideas
+	  //write critical ideas to page
 	});
 
 
@@ -220,6 +231,14 @@
 	    event.preventDefault();
 	    $(this).blur();
 	  }
+	});
+
+	$('#title-input').on('keyup', function () {
+	  var newTitle =  $(this).val();
+	  //count characters of new title
+	  charLength = newTitle.length++;
+
+	  $('#char-title').text("Character counter: " + charLength);
 	});
 
 	$('.idea-list').on('click', '.upvote', function() {
@@ -278,13 +297,13 @@
 	  storeIdea();
 	});
 
-	function completedIdeas(idea) {
-	  return idea.completed === true;
-	}
-
-	function uncompletedIdeas(idea) {
-	  return idea.completed === false;
-	}
+	//(idea) function completedIdeas(idea) {
+	//   return idea.completed === true;
+	// }
+	//
+	// (idea)function uncompletedIdeas(idea) {
+	//   return idea.completed === false;
+	// }
 
 	$('#btn-completed').on('click', function() {
 	  ideasList = JSON.parse(localStorage.getItem('ideasList')) || [];
@@ -293,10 +312,10 @@
 	  uncompletedList = ideasList.filter(uncompletedIdeas);
 	  $('.list-li').remove();
 	  uncompletedList.forEach(function(idea){
-	    renderUncompletedIdeaToHTML(idea)
+	    renderUncompletedIdeaToHTML(idea);
 	  });
 	  completedList.forEach(function(idea) {
-	    renderCompletedIdeaToHTML(idea)
+	    renderCompletedIdeaToHTML(idea);
 	  });
 
 	});
@@ -326,7 +345,7 @@
 	  }
 	});
 
-	module.exports = ideasList;
+	module.exports = Idea;
 
 
 /***/ },
@@ -10938,7 +10957,7 @@
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n/*** body ***/\nheader {\n  background-color: #E5F3F2; }\n\nheader h1, span {\n  font-family: 'Roboto Slab', serif;\n  font-weight: 700;\n  font-size: 40px;\n  text-align: center; }\n\nheader input {\n  height: 20px;\n  width: 500px;\n  position: absolute; }\n\nspan {\n  margin: 30px 0;\n  display: inline-block;\n  color: #6D6E71; }\n\n::-webkit-input-placeholder {\n  font-size: 14px; }\n\n.body-input {\n  font-family: 'Open Sans', sans-serif;\n  color: #939598;\n  font-size: 14px;\n  margin: 10px auto;\n  word-wrap: break-word;\n  line-height: 1.5; }\n\n.btn-header {\n  background-color: #00A79D;\n  border: none;\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin-bottom: 20px;\n  position: relative;\n  text-align: center;\n  top: 95px;\n  width: 406px; }\n\n.btn-header:hover {\n  background-color: #045E55; }\n\n.completed {\n  text-decoration: line-through; }\n\n.idea-form {\n  background-color: #E5F3F2;\n  position: relative;\n  height: 155px;\n  display: -webkit-flex;\n  -webkit-justify-content: center;\n  justify-content: center; }\n\n.idea-text {\n  color: #00A79D;\n  margin-bottom: 20px; }\n\n#title-input, #body-input, #search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/ }\n\n#body-input {\n  top: 45px;\n  width: 400px;\n  height: 20px; }\n\n/*** main ***/\nli {\n  margin: auto;\n  list-style: none;\n  width: 400px;\n  padding: 20px 0;\n  border-bottom: 2px solid #D1D3D4; }\n\nmain {\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  /*position: relative;*/\n  justify-content: center; }\n\nnav {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  margin-top: 20px; }\n\n.btn-body {\n  /*position: relative;*/\n  background-color: #00A79D;\n  border: none;\n  /*width: 406px;*/\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin: 0px 5px 20px;\n  padding: 0;\n  text-align: center;\n  top: 95px; }\n\n.btn-body:hover {\n  background-color: #045E55; }\n\n.completed-todo {\n  display: inline-block;\n  margin: 0px 10px;\n  float: right; }\n\n.delete-idea, .upvote, .downvote, .completed-todo {\n  height: 20px;\n  width: 20px;\n  display: inline-block;\n  vertical-align: bottom;\n  border: none;\n  cursor: pointer; }\n\n.delete-idea {\n  background: url(" + __webpack_require__(9) + ") no-repeat;\n  display: inline-block;\n  margin: 0;\n  float: right; }\n\n.delete-idea:hover {\n  background: url(" + __webpack_require__(10) + "); }\n\n.downvote {\n  background: url(" + __webpack_require__(11) + ") no-repeat;\n  margin-right: 12px; }\n\n.downvote:hover {\n  background: url(" + __webpack_require__(12) + "); }\n\n.idea-title {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 18px;\n  line-height: 1.25;\n  display: inline-block;\n  max-width: 250px;\n  word-wrap: break-word; }\n\n.quality-control {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 12px;\n  padding-top: 2px; }\n\n.upvote {\n  background: url(" + __webpack_require__(13) + ") no-repeat;\n  margin-right: 12px; }\n\n.upvote:hover {\n  background: url(" + __webpack_require__(14) + "); }\n\n.vote {\n  width: auto;\n  display: inline-flex; }\n\n#search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/\n  height: 20px;\n  margin-bottom: 20px; }\n\n@media (max-width: 440px) {\n  /*** header ***/\n  header h1, span {\n    font-size: 30px; }\n  header input {\n    width: 300px; }\n  span {\n    margin: 20px 0; }\n  ::-webkit-input-placeholder {\n    font-size: 16px;\n    padding: 0; }\n  .idea-form {\n    height: 195px; }\n  #title-input, #body-input, #search-bar {\n    width: 300px;\n    display: block;\n    margin: auto; }\n  #body-input {\n    height: 60px; }\n  #btn-save {\n    width: 306px;\n    font-size: 16px;\n    top: 135px; }\n  /*** main ***/\n  li {\n    width: 300px; }\n  .body-input {\n    font-size: 16px; }\n  .delete-idea, .upvote, .downvote {\n    height: 22px;\n    width: 22px; }\n  .delete-idea {\n    background: url(" + __webpack_require__(9) + ") no-repeat;\n    display: inline-block;\n    margin: 0px 10px;\n    float: right; }\n  .idea-title {\n    font-size: 20px;\n    max-width: 150px; }\n  .quality-control {\n    font-size: 14px;\n    padding-top: 4px; } }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n/*** body ***/\nheader {\n  background-color: #E5F3F2; }\n\nheader h1, span {\n  font-family: 'Roboto Slab', serif;\n  font-weight: 700;\n  font-size: 40px;\n  text-align: center; }\n\nheader input {\n  height: 20px;\n  width: 500px;\n  position: absolute; }\n\nspan {\n  margin: 30px 0;\n  display: inline-block;\n  color: #6D6E71; }\n\n::-webkit-input-placeholder {\n  font-size: 14px; }\n\n.body-input {\n  font-family: 'Open Sans', sans-serif;\n  color: #939598;\n  font-size: 14px;\n  margin: 10px auto;\n  word-wrap: break-word;\n  line-height: 1.5; }\n\n.btn-header {\n  background-color: #00A79D;\n  border: none;\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin-bottom: 20px;\n  position: relative;\n  text-align: center;\n  top: 95px;\n  width: 406px; }\n\n.btn-header:hover {\n  background-color: #045E55; }\n\n#char-title, #char-body {\n  font-size: 16px; }\n\n.completed {\n  text-decoration: line-through; }\n\n.idea-form {\n  background-color: #E5F3F2;\n  position: relative;\n  height: 155px;\n  display: -webkit-flex;\n  -webkit-justify-content: center;\n  justify-content: center; }\n\n.idea-text {\n  color: #00A79D;\n  margin-bottom: 20px; }\n\n#title-input, #body-input, #search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/ }\n\n#body-input {\n  top: 45px;\n  width: 400px;\n  height: 20px; }\n\n/*** main ***/\nli {\n  margin: auto;\n  list-style: none;\n  width: 400px;\n  padding: 20px 0;\n  border-bottom: 2px solid #D1D3D4; }\n\nmain {\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  /*position: relative;*/\n  justify-content: center; }\n\nnav {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  margin-top: 20px; }\n\n.btn-body {\n  /*position: relative;*/\n  background-color: #00A79D;\n  border: none;\n  /*width: 406px;*/\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin: 0px 5px 20px;\n  padding: 0;\n  text-align: center;\n  top: 95px; }\n\n.btn-body:hover {\n  background-color: #045E55; }\n\n.completed-todo {\n  display: inline-block;\n  margin: 0px 10px;\n  float: right; }\n\n.delete-idea, .upvote, .downvote, .completed-todo {\n  height: 20px;\n  width: 20px;\n  display: inline-block;\n  vertical-align: bottom;\n  border: none;\n  cursor: pointer; }\n\n.delete-idea {\n  background: url(" + __webpack_require__(9) + ") no-repeat;\n  display: inline-block;\n  margin: 0;\n  float: right; }\n\n.delete-idea:hover {\n  background: url(" + __webpack_require__(10) + "); }\n\n.downvote {\n  background: url(" + __webpack_require__(11) + ") no-repeat;\n  margin-right: 12px; }\n\n.downvote:hover {\n  background: url(" + __webpack_require__(12) + "); }\n\n.idea-title {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 18px;\n  line-height: 1.25;\n  display: inline-block;\n  max-width: 250px;\n  word-wrap: break-word; }\n\n.quality-control {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 12px;\n  padding-top: 2px; }\n\n.upvote {\n  background: url(" + __webpack_require__(13) + ") no-repeat;\n  margin-right: 12px; }\n\n.upvote:hover {\n  background: url(" + __webpack_require__(14) + "); }\n\n.vote {\n  width: auto;\n  display: inline-flex; }\n\n#search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/\n  height: 20px;\n  margin-bottom: 20px; }\n\n@media (max-width: 440px) {\n  /*** header ***/\n  header h1, span {\n    font-size: 30px; }\n  header input {\n    width: 300px; }\n  span {\n    margin: 20px 0; }\n  ::-webkit-input-placeholder {\n    font-size: 16px;\n    padding: 0; }\n  .idea-form {\n    height: 195px; }\n  #title-input, #body-input, #search-bar {\n    width: 300px;\n    display: block;\n    margin: auto; }\n  #body-input {\n    height: 60px; }\n  #btn-save {\n    width: 306px;\n    font-size: 16px;\n    top: 135px; }\n  /*** main ***/\n  li {\n    width: 300px; }\n  .body-input {\n    font-size: 16px; }\n  .delete-idea, .upvote, .downvote {\n    height: 22px;\n    width: 22px; }\n  .delete-idea {\n    background: url(" + __webpack_require__(9) + ") no-repeat;\n    display: inline-block;\n    margin: 0px 10px;\n    float: right; }\n  .idea-title {\n    font-size: 20px;\n    max-width: 150px; }\n  .quality-control {\n    font-size: 14px;\n    padding-top: 4px; } }\n", ""]);
 
 	// exports
 
