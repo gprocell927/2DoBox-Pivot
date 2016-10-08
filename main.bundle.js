@@ -58,13 +58,13 @@
 	var $ = __webpack_require__(2);
 	var end = 10;
 
-	function Idea(title, body, id, quality, completed) {
-	  this.id = id || Date.now() ;
-	  this.title = title;
-	  this.body = body;
-	  this.quality = quality || 'Normal';
-	  this.completed = false;
-	}
+	//(idea) function Idea(title, body, id, quality, completed) {
+	//   this.id = id || Date.now() ;
+	//   this.title = title;
+	//   this.body = body;
+	//   this.quality = quality || 'Normal';
+	//   this.completed = false;
+	// }
 
 	function clearFields() {
 	  $('#title-input').val('');
@@ -94,45 +94,44 @@
 	  clearFields();
 	}
 
-	function markAsComplete(idea){
-	  idea.completed = true;
-	}
-	function renderCompletedIdeaToHTML(idea) {
+	// (idea)function markAsComplete(idea){
+	//   idea.completed = true;
+	// }
+	// function renderCompletedIdeaToHTML(idea) {
+	//
+	//   $('.idea-list').prepend(
+	//     `<li id=${idea.id} class="list-li completed" data-completed=true >
+	//     <h3 contenteditable="true" class="idea-title completed">${idea.title}</h3>
+	//     <button class="delete-idea"></button>
+	//     <p contenteditable="true" class="body-input"> ${idea.body}</p>
+	//     <section class="completed">
+	//     <button class="completed-todo">COMPLETE</button>
+	//     </section>
+	//     <section class="vote">
+	//     <button class="upvote"></button>
+	//     <article class="downvote"></article>
+	//     <p class="quality-control">quality: ${idea.quality}</p>
+	//     </section>
+	//     </li>`);
+	//   }
 
-	  $('.idea-list').prepend(
-	    `<li id=${idea.id} class="list-li completed" data-completed=true >
-	    <h3 contenteditable="true" class="idea-title completed">${idea.title}</h3>
-	    <button class="delete-idea"></button>
-	    <p contenteditable="true" class="body-input"> ${idea.body}</p>
-	    <section class="completed">
-	    <button class="completed-todo">COMPLETE</button>
-	    </section>
-	    <section class="vote">
-	    <button class="upvote"></button>
-	    <article class="downvote"></article>
-	    <p class="quality-control">quality: ${idea.quality}</p>
-	    </section>
-	    </li>`);
-	  }
-
-
-	  function renderUncompletedIdeaToHTML(idea) {
-
-	  $('.idea-list').prepend(
-	    `<li id=${idea.id} class="list-li">
-	    <h3 contenteditable="true" class="idea-title">${idea.title}</h3>
-	    <button class="delete-idea"></button>
-	    <p contenteditable="true" class="body-input"> ${idea.body}</p>
-	    <section class="completed">
-	    <button class="completed-todo">COMPLETE</button>
-	    </section>
-	    <section class="vote">
-	    <button class="upvote"></button>
-	    <article class="downvote"></article>
-	    <p class="quality-control">quality: ${idea.quality}</p>
-	    </section>
-	    </li>`);
-	  }
+	  // (idea)function renderUncompletedIdeaToHTML(idea) {
+	  //
+	  // $('.idea-list').prepend(
+	  //   `<li id=${idea.id} class="list-li">
+	  //   <h3 contenteditable="true" class="idea-title">${idea.title}</h3>
+	  //   <button class="delete-idea"></button>
+	  //   <p contenteditable="true" class="body-input"> ${idea.body}</p>
+	  //   <section class="completed">
+	  //   <button class="completed-todo">COMPLETE</button>
+	  //   </section>
+	  //   <section class="vote">
+	  //   <button class="upvote"></button>
+	  //   <article class="downvote"></article>
+	  //   <p class="quality-control">quality: ${idea.quality}</p>
+	  //   </section>
+	  //   </li>`);
+	  // }
 
 	function storeIdea() {
 	  localStorage.setItem("ideasList", JSON.stringify(ideasList));
@@ -166,9 +165,6 @@
 	function numIdeas() {
 	  var numIdeas = ideasList.length;
 	  var begin = 0;
-	  // var end = 10;
-
-	  //the button is clicked again add 10 the end variable
 
 	  slicedIdeas = ideasList.slice(begin, end);
 	  writeIdeas(slicedIdeas);
@@ -192,16 +188,9 @@
 	  end = end + 10;
 	});
 
-
-	// uncompletedList = ideasList.filter(uncompletedIdeas);
-	// $('.list-li').remove();
-	// uncompletedList.forEach(function(idea){
-	//   renderUncompletedIdeaToHTML(idea);
-	// });
-
-	function criticalIdeas(idea){
-	  return idea.quality === 'Critical';
-	}
+	// (idea)function criticalIdeas(idea){
+	//   return idea.quality === 'Critical';
+	// }
 
 	$('#btn-critical').on('click', function(){
 	  $('.list-li').remove();
@@ -308,13 +297,13 @@
 	  storeIdea();
 	});
 
-	function completedIdeas(idea) {
-	  return idea.completed === true;
-	}
-
-	function uncompletedIdeas(idea) {
-	  return idea.completed === false;
-	}
+	//(idea) function completedIdeas(idea) {
+	//   return idea.completed === true;
+	// }
+	//
+	// (idea)function uncompletedIdeas(idea) {
+	//   return idea.completed === false;
+	// }
 
 	$('#btn-completed').on('click', function() {
 	  ideasList = JSON.parse(localStorage.getItem('ideasList')) || [];
