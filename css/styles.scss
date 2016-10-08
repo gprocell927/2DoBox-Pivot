@@ -55,9 +55,6 @@ span {
 .btn-header:hover{
   background-color:#045E55;
 }
-#char-title, #char-body{
-    font-size: 16px;
-}
 
 .completed {
   text-decoration: line-through;
@@ -75,6 +72,10 @@ span {
 .idea-text {
   color: #00A79D;
   margin-bottom: 20px;
+}
+
+#char-title, #char-body{
+  font-size: 16px;
 }
 
 #title-input, #body-input, #search-bar {
