@@ -76,13 +76,19 @@ describe ('functions of Idea', function () {
     assert.isFunction(idea.renderCompletedIdeaToHTML);
   });
 
-  it('has a function called "updateBody"', function(){
+  it('has a function called "criticalIdeas"', function (){
     var idea = new Idea();
-    assert.isFunction(idea.updateBody);
+    assert.isFunction(idea.criticalIdeas);
   });
 
-  it('"updateBody" should be able to change the body text', function(){
+  it('has a function called "completedIdeas"', function (){
     var idea = new Idea();
+    assert.isFunction(idea.completedIdeas);
+  });
+
+  it('has a function called "uncompletedIdeas"', function (){
+    var idea = new Idea();
+    assert.isFunction(idea.uncompletedIdeas);
   });
 
 
