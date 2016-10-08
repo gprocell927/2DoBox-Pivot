@@ -92,10 +92,3 @@ describe ('functions of Idea', function () {
   });
 
 });
-
-describe('Runner', function() {
-  context('it should have an array that stores ideas', function(){
-    var runner = new Runner();
-    assert.isArray(runner.ideasList, true);
-  });
-});
