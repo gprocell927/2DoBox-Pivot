@@ -1,1 +1,1 @@
-require('./specs/idea-test.js');
+require('./idea-test.js');

@@ -58,13 +58,13 @@
 	var $ = __webpack_require__(2);
 	var end = 10;
 
-	// function Idea(title, body, id, quality, completed) {
-	//   this.id = id || Date.now() ;
-	//   this.title = title;
-	//   this.body = body;
-	//   this.quality = quality || 'Normal';
-	//   this.completed = false;
-	// }
+	function Idea(title, body, id, quality, completed) {
+	  this.id = id || Date.now() ;
+	  this.title = title;
+	  this.body = body;
+	  this.quality = quality || 'Normal';
+	  this.completed = false;
+	}
 
 	function clearFields() {
 	  $('#title-input').val('');

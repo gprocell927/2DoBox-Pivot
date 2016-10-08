@@ -463,16 +463,13 @@
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
-	// const Idea = require('../lib/idea.js');
-	// const Idea = require('../../lib/scripts.js');
 	const Idea = __webpack_require__(23);
 	const assert = __webpack_require__(24).assert;
 
-	describe('There is a constructor for Idea', function() {
+	describe ('Idea', function () {
 
-	  it('Should be a function call Idea', function(){
-	    assert.isFunction();
+	  it('should be a function', function (){
+	    assert.isFunction(Idea);
 	  });
 	});
 
@@ -481,16 +478,17 @@
 /* 23 */
 /***/ function(module, exports) {
 
-	
-	function Idea(title, body, id, quality, completed) {
-	  this.id = id || Date.now() ;
-	  this.title = title;
-	  this.body = body;
-	  this.quality = quality || 'Normal';
-	  this.completed = false;
+	function Idea(){
+
 	}
 
-	module.exports = Idea;
+	// function Idea(title, body, id, quality, completed) {
+	//   this.id = id || Date.now() ;
+	//   this.title = title;
+	//   this.body = body;
+	//   this.quality = quality || 'Normal';
+	//   this.completed = false;
+	// }
 
 
 /***/ },
