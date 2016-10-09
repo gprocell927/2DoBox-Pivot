@@ -23,16 +23,18 @@ describe('attributes on our application', function (){
 
   it('should be able to add my todos to the page', function(){
     browser.url('/');
-    var todoTitle = browser.element(".idea-titleuncompleted");
-    var todoDescription = browser.element(".body-input");
+    var todoTitle = browser.element("#title-input");
+    var todoDescription = browser.element("#body-input");
+    var appendedTitle = browser.element(".idea-titleuncompleted");
+    var appendedDescription = browser.element(".body-input");
 
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');
 
     browser.click('#btn-save');
 
-    assert.equal(todoTitle.getValue(), 'great title');
-    assert.equal(todoDescription.getValue(), 'great description');
+    assert.equal(appendedTitle.getValue(), 'great title');
+    assert.equal(appendedDescription.getValue(), 'great description');
 
 });
 

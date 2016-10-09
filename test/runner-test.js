@@ -1,5 +1,6 @@
 const assert = require('chai').assert;
 const Runner = require('../lib/runner.js');
+var $ = require('jquery');
 
 describe('Runner', function() {
 
@@ -29,6 +30,23 @@ describe('Runner', function() {
 
     assert.equal(runner.ideasList.length, 1);
     assert.isObject(runner.ideasList[0]);
+  });
+
+  it.skip('should store an idea', function(){
+
+  });
+
+  it.skip('should clear text input fields when an idea is saved', function(){
+    var runner = new Runner();
+    var titleText = $('#title-input').val();
+    var bodyText = $('#body-input').val();
+    var searchText = $('#search-bar').val();
+
+    runner.clearFields();
+
+    assert.equal(titleText, '');
+    assert.equal(bodyText, '');
+    assert.equal(searchText, '');
   });
 
   it.skip('should return a matching idea when findIdea() is called', function() {
