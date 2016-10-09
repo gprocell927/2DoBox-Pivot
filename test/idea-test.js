@@ -66,29 +66,6 @@ describe ('functions of Idea', function () {
     assert(idea.completed,true);
   });
 
-  it('has a function called "renderUncompletedIdeaToHTML"', function() {
-    var idea = new Idea();
-    assert.isFunction(idea.renderUncompletedIdeaToHTML);
-  });
-
-  it('has a function called "renderCompletedIdeaToHTML"', function (){
-    var idea = new Idea();
-    assert.isFunction(idea.renderCompletedIdeaToHTML);
-  });
-
-  it('has a function called "criticalIdeas"', function (){
-    var idea = new Idea();
-    assert.isFunction(idea.criticalIdeas);
-  });
-
-  it('has a function called "completedIdeas"', function (){
-    var idea = new Idea();
-    assert.isFunction(idea.completedIdeas);
-  });
-
-  it('has a function called "uncompletedIdeas"', function (){
-    var idea = new Idea();
-    assert.isFunction(idea.uncompletedIdeas);
-  });
+  
 
 });
