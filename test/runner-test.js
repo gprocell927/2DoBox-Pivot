@@ -3,12 +3,26 @@ const Runner = require('../lib/runner.js');
 
 describe('Runner', function() {
 
-  it('should have an array that stores ideas', function(){
+  it('should be a function', function(){
+    assert.isFunction(Runner);
+  });
+
+  it('should have an array that stores all ideas', function(){
     var runner = new Runner();
     assert.isArray(runner.ideasList);
   });
 
-  it('should create an Idea when "generateNewIdea()" is called', function(){
+  it('should have an array that stores uncompleted ideas', function(){
+    var runner = new Runner();
+    assert.isArray(runner.uncompletedIdeasList);
+  });
+
+  it('should instantiate a new Idea', function(){
+    var runner = new Runner();
+    assert.isObject(runner.idea);
+  });
+
+  it('should push a new Idea into ideasList when "generateNewIdea()" is called', function(){
     var runner = new Runner();
 
     runner.generateNewIdea();
