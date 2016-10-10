@@ -85,6 +85,7 @@ span {
 #char-title, #char-body{
   // display: block;
   font-size: 12px;
+  width: 460px;
 }
 
 // #body-input {
@@ -116,6 +117,7 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
+  width: 460px;
 }
 
 .btn-body{
@@ -127,7 +129,7 @@ nav {
   cursor: pointer;
   font-size: 14px;
   height: 30px;
-  margin: 0 4px 20px;
+  margin-bottom: 20px;
   padding: 0 4px;
   text-align: center;
   top: 95px;
@@ -208,11 +210,11 @@ nav {
 }
 
 #search-bar {
-  width: 400px;
+  width: 456px;
   display: block;
   margin: auto;
-  /*padding: 0;
-  margin: 0;*/
+  padding: 0;
+  margin: 0;
   height: 20px;
   margin-bottom: 20px;
 }
