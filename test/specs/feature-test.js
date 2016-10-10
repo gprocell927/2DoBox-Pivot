@@ -11,8 +11,8 @@ describe('welcome page', function() {
 describe('input form', function (){
   it('has input forms and I can set values in those forms', function() {
     browser.url('/');
-    var todoTitle = browser.element("#title-input");
-    var todoDescription = browser.element("#body-input");
+    var todoTitle = browser.element("#input-title");
+    var todoDescription = browser.element("#input-body");
 
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');
@@ -27,9 +27,9 @@ describe('appending tasks', function (){
 
   it('should be able to add my todos to the page', function(){
     browser.url('/');
-    var todoTitle = browser.element('.idea-titleuncompleted');
-    var todoDescription = browser.element('.body-input');
-
+    var todoTitle = browser.element("#input-title");
+    var todoDescription = browser.element("#input-body");
+    var todoAppendedTitle = browser.element('')
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');
 
