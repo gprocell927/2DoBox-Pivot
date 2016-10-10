@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet"> -->
     <title>ToDo Box</title>
   </head>
   <body>
@@ -11,10 +11,12 @@
         <span class ="idea-text">idea</span><span class ="box-text">box</span>
       </h1>
       <form class="idea-form">
-        <input type="text" maxlength="120" id="input-title" placeholder="Title">
-        <span id = "char-title">Character counter: </span>
-        <input type="text" maxlength="120" id="input-body" placeholder="Body">
-        <span id="char-body">Character counter: </span>
+        <p id = "char-title">Character counter:
+        </p>
+          <input type="text" maxlength="120" id="input-title" placeholder="Title">
+        <p id="char-body">Character counter:
+        </p>
+          <input type="text" maxlength="120" id="input-body" placeholder="Body">
         <button type="button" disabled id="btn-save" class="btn-header">save</button>
       </form>
     </header>
