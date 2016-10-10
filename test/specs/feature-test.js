@@ -8,7 +8,7 @@ describe('welcome page', function() {
   });
 });
 
-describe('attributes on our application', function (){
+describe('input form', function (){
   it('has input forms and I can set values in those forms', function() {
     browser.url('/');
     var todoTitle = browser.element("#title-input");
@@ -21,10 +21,14 @@ describe('attributes on our application', function (){
     assert.equal(todoDescription.getValue(), 'great description');
   });
 
+});
+
+describe('appending tasks', function (){
+
   it('should be able to add my todos to the page', function(){
     browser.url('/');
-    var todoTitle = browser.element(".idea-titleuncompleted");
-    var todoDescription = browser.element(".body-input");
+    var todoTitle = browser.element('.idea-titleuncompleted');
+    var todoDescription = browser.element('.body-input');
 
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');
@@ -42,8 +46,8 @@ describe('voting attributes', function (){
     browser.url('/');
     browser.localStorage('DELETE');
     browser.refresh();
-    var todoTitle = browser.element("#title-input");
-    var todoDescription = browser.element("#body-input");
+    var todoTitle = browser.element('#title-input');
+    var todoDescription = browser.element('#body-input');
 
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');

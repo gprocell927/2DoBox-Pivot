@@ -77,7 +77,7 @@ span {
   margin-bottom: 20px;
 }
 
-#title-input, #body-input, #search-bar {
+#input-title, #input-body, #search-bar {
   width: 400px;
   display: block;
   margin: auto;
@@ -85,7 +85,7 @@ span {
   margin: 0;*/
 }
 
-#body-input {
+#input-body {
   top: 45px;
   width: 400px;
   height: 20px;
@@ -235,13 +235,13 @@ nav {
     height: 195px;
   }
 
-  #title-input, #body-input, #search-bar {
+  #input-title, #input-body, #search-bar {
     width: 300px;
     display: block;
     margin: auto;
   }
 
-  #body-input {
+  #input-body {
     height: 60px;
   }
 
