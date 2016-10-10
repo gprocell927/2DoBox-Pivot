@@ -1,0 +1,28 @@
+// variables.scss
+
+// Colors
+
+$blue-light: #E5F3F2;
+$gray-dark: #6D6E71;
+$gray-light: #939598;
+$gray-vary-light: #D1D3D4;
+$green: #00A79D;
+$green-dark: #045E55;
+
+// Fonts
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700);
+
+$serif-font: 'Roboto Slab', serif;
+$sans-font: 'Open Sans', sans-serif;
+
+// Brand
+
+$background-form: $blue-light;
+$btn-color: $green;
+$btn-hover-color: $green-dark;
+$btn-font-color: white;
+$font-color: $gray-dark;
+$line-color: $gray-vary-light;
+$logo-one: $green;
+$logo-two: $gray-dark;

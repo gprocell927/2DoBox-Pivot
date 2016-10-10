@@ -2,11 +2,11 @@
 
 
 header {
-  background-color: #E5F3F2;
+  background-color: $background-form;
 }
 
 header h1, span {
-  font-family: 'Roboto Slab', serif;
+  font-family: $serif-font;
   font-weight: 700;
   font-size: 40px;
   text-align: center;
@@ -21,7 +21,7 @@ header input {
 span {
   margin: 30px 0;
   display: inline-block;
-  color: #6D6E71
+  color: $logo-two;
 }
 
 ::-webkit-input-placeholder {
@@ -29,7 +29,7 @@ span {
 }
 
 .body-input {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $sans-font;
   color: #939598;
   font-size: 14px;
   margin: 10px auto;
@@ -39,9 +39,9 @@ span {
 
 
 .btn-header{
-  background-color:#00A79D;
+  background-color: $logo-one;
   border: none;
-  color: #FFFFFF;
+  color: $btn-font-color;
   cursor: pointer;
   font-size: 14px;
   height: 30px;
@@ -53,7 +53,7 @@ span {
 }
 
 .btn-header:hover{
-  background-color:#045E55;
+  background-color:$btn-hover-color;
 }
 
 .completed {
@@ -61,7 +61,7 @@ span {
 }
 
 .idea-form {
-  background-color: #E5F3F2;
+  background-color: $background-form;
   position: relative;
   height: 155px;
   display: -webkit-flex;
@@ -70,7 +70,7 @@ span {
 }
 
 .idea-text {
-  color: #00A79D;
+  color: $logo-one;
   margin-bottom: 20px;
 }
 
@@ -99,7 +99,7 @@ li {
  list-style: none;
  width: 400px;
  padding: 20px 0;
- border-bottom: 2px solid #D1D3D4;
+ border-bottom: 2px solid $line-color;
 }
 
 main {
@@ -119,10 +119,10 @@ nav {
 
 .btn-body{
   /*position: relative;*/
-  background-color:#00A79D;
+  background-color: $btn-color;
   border: none;
   /*width: 406px;*/
-  color: #FFFFFF;
+  color: $btn-font-color;
   cursor: pointer;
   font-size: 14px;
   height: 30px;
@@ -133,7 +133,7 @@ nav {
 }
 
 .btn-body:hover{
-  background-color:#045E55;
+  background-color: $btn-hover-color;
 }
 
 .completed-todo{
@@ -173,7 +173,7 @@ nav {
 
 .idea-title {
   font-family: 'Roboto Slab', serif;
-  color: #6D6E71;
+  color: $font-color;
   font-size: 18px;
   line-height: 1.25;
   display: inline-block;
@@ -183,7 +183,7 @@ nav {
 
 .quality-control {
   font-family: 'Roboto Slab', serif;
-  color: #6D6E71;
+  color: $font-color;
   font-size: 12px;
   padding-top: 2px;
 }
