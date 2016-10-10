@@ -43,9 +43,7 @@ span {
   margin-bottom: 20px;
   margin-top: 20px;
   padding: 0;
-  // position: relative;
   text-align: center;
-  // top: 95px;
   width: 460px;
 }
 
@@ -56,10 +54,6 @@ span {
 .idea-form {
   background-color: $background-form;
   width: 460px;
-  // display: flex;
-  // display: -webkit-flex;
-  // height: 155px;
-  // justify-content: center;
   margin: auto;
   // position: absolute;
   // -webkit-justify-content: center;
@@ -70,36 +64,29 @@ span {
   margin-bottom: 20px;
 }
 
-#char-body, #char-title, #title-input, #body-input, #search-bar {
+#char-body, #char-title, #input-title, #input-body {
   border: 2;
   color: $input-font-color;
   display: block;
   font-family: $sans-font;
   font-size: 14px;
-  // margin: auto;
   line-height: 1.5;
   word-wrap: break-word;
-  width: 455px;
+  max-width: 455px;
 }
 
 #char-title, #char-body{
-  // display: block;
   font-size: 12px;
   width: 460px;
 }
 
-// #body-input {
-//   top: 45px;
-//   width: 400px;
-//   height: 20px;
-// }
 
 /*** main ***/
 
 li {
  margin: auto;
  list-style: none;
- width: 400px;
+ width: 460px;
  padding: 20px 0;
  border-bottom: 2px solid $line-color;
 }
@@ -108,7 +95,6 @@ main {
   align-items: center;
   display: flex;
   flex-direction: column;
-  /*position: relative;*/
   justify-content: center;
 }
 
@@ -120,11 +106,31 @@ nav {
   width: 460px;
 }
 
+.body-input, .idea-title, .idea-titleuncompleted {
+  color: $font-color;
+  // display: block;
+  display: inline-block;
+  font-family: 'Roboto Slab', serif;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  max-width: 430px;
+  min-width: 430px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.completed-todo, .delete-idea, .downvote, .upvote {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: bottom;
+  border: none;
+  cursor: pointer;
+}
 .btn-body{
-  /*position: relative;*/
   background-color: $btn-color;
   border: none;
-  /*width: 406px;*/
   color: $btn-font-color;
   cursor: pointer;
   font-size: 14px;
@@ -139,29 +145,28 @@ nav {
   background-color: $btn-hover-color;
 }
 
+.body-input {
+  display: block;
+}
 .completed {
   text-decoration: line-through;
 }
 
 .completed-todo{
   display: inline-block;
-  margin: 0px 10px;
+  font-size: 12px;
   float: right;
+  height: 20px;
+  margin: 0px 0px 10px 0px;
+  padding-bottom: 2px;
+  width: 75px;
 }
 
-.delete-idea, .upvote, .downvote, .completed-todo {
-  height: 20px;
-  width: 20px;
-  display: inline-block;
-  vertical-align: bottom;
-  border: none;
-  cursor: pointer;
-}
 
 .delete-idea {
   background: url('../images/svg-images/delete.svg') no-repeat;
-  display: inline-block;
-  margin: 0;
+  // display: inline-block;
+  margin: 3px;
   float: right;
 }
 
@@ -178,15 +183,6 @@ nav {
   background: url('../images/svg-images/downvote-hover.svg')
 }
 
-.idea-title {
-  font-family: 'Roboto Slab', serif;
-  color: $font-color;
-  font-size: 18px;
-  line-height: 1.25;
-  display: inline-block;
-  max-width: 250px;
-  word-wrap: break-word;
-}
 
 .quality-control {
   font-family: 'Roboto Slab', serif;
@@ -210,13 +206,21 @@ nav {
 }
 
 #search-bar {
-  width: 456px;
+  border: 2;
+  color: $input-font-color;
   display: block;
+  display: block;
+  font-family: $sans-font;
+  font-size: 14px;
+  // margin: auto;
+  line-height: 1.5;
   margin: auto;
-  padding: 0;
-  margin: 0;
-  height: 20px;
+  // margin: 0;
   margin-bottom: 20px;
+  padding: 1;
+  height: 20px;
+  width: 456px;
+  word-wrap: break-word;
 }
 
 @media (max-width: 440px) {
