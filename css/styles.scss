@@ -3,9 +3,10 @@
 
 header {
   background-color: $background-form;
+  outline-color: magenta 5px;
 }
 
-header h1, span {
+header h1, p, span {
   font-family: $serif-font;
   font-weight: 700;
   font-size: 40px;
@@ -15,7 +16,11 @@ header h1, span {
 header input {
   height: 20px;
   width: 500px;
-  position: absolute;
+  // position: absolute;
+}
+
+header p {
+  text-align: left;
 }
 
 span {
@@ -28,45 +33,36 @@ span {
   font-size: 14px;
 }
 
-.body-input {
-  font-family: $sans-font;
-  color: #939598;
-  font-size: 14px;
-  margin: 10px auto;
-  word-wrap: break-word;
-  line-height: 1.5;
-}
-
-
 .btn-header{
-  background-color: $logo-one;
+  background-color: $btn-color;
   border: none;
   color: $btn-font-color;
   cursor: pointer;
   font-size: 14px;
   height: 30px;
   margin-bottom: 20px;
-  position: relative;
+  margin-top: 20px;
+  padding: 0;
+  // position: relative;
   text-align: center;
-  top: 95px;
-  width: 406px;
+  // top: 95px;
+  width: 460px;
 }
 
 .btn-header:hover{
   background-color:$btn-hover-color;
 }
 
-.completed {
-  text-decoration: line-through;
-}
-
 .idea-form {
   background-color: $background-form;
-  position: relative;
-  height: 155px;
-  display: -webkit-flex;
-  -webkit-justify-content: center;
-  justify-content: center;
+  width: 460px;
+  // display: flex;
+  // display: -webkit-flex;
+  // height: 155px;
+  // justify-content: center;
+  margin: auto;
+  // position: absolute;
+  // -webkit-justify-content: center;
 }
 
 .idea-text {
@@ -74,23 +70,28 @@ span {
   margin-bottom: 20px;
 }
 
-#char-title, #char-body{
-  font-size: 16px;
-}
-
-#title-input, #body-input, #search-bar {
-  width: 400px;
+#char-body, #char-title, #title-input, #body-input, #search-bar {
+  border: 2;
+  color: $input-font-color;
   display: block;
-  margin: auto;
-  /*padding: 0;
-  margin: 0;*/
+  font-family: $sans-font;
+  font-size: 14px;
+  // margin: auto;
+  line-height: 1.5;
+  word-wrap: break-word;
+  width: 455px;
 }
 
-#body-input {
-  top: 45px;
-  width: 400px;
-  height: 20px;
+#char-title, #char-body{
+  // display: block;
+  font-size: 12px;
 }
+
+// #body-input {
+//   top: 45px;
+//   width: 400px;
+//   height: 20px;
+// }
 
 /*** main ***/
 
@@ -126,14 +127,18 @@ nav {
   cursor: pointer;
   font-size: 14px;
   height: 30px;
-  margin: 0px 5px 20px;
-  padding: 0;
+  margin: 0 4px 20px;
+  padding: 0 4px;
   text-align: center;
   top: 95px;
 }
 
 .btn-body:hover{
   background-color: $btn-hover-color;
+}
+
+.completed {
+  text-decoration: line-through;
 }
 
 .completed-todo{
