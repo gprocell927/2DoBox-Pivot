@@ -45,7 +45,7 @@ describe('appending tasks', function (){
 
 describe('voting attributes', function (){
 
-  it.skip('should have a button that changes a toDos importance to critical', function() {
+  it('should have a button that changes a toDos importance to critical', function() {
     browser.url('/');
     browser.localStorage('DELETE');
     browser.refresh();
