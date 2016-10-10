@@ -29,14 +29,17 @@ describe('appending tasks', function (){
     browser.url('/');
     var todoTitle = browser.element("#input-title");
     var todoDescription = browser.element("#input-body");
-    var todoAppendedTitle = browser.element('')
+    var todoAppendedTitle = browser.element('.idea-titleuncompleted');
+    var todoAppendedDescription =
+    browser.element('.body-input');
+
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');
 
     browser.click('#btn-save');
 
-    assert.equal(todoTitle.getValue(), 'great title');
-    assert.equal(todoDescription.getValue(), 'great description');
+    assert.equal(todoAppendedTitle.getText(), 'great title');
+    assert.equal(todoAppendedDescription.getText(), 'great description');
 
 });
 
