@@ -44,61 +44,306 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__ (1);
-	__webpack_require__(3);
-	__webpack_require__(7);
+	var Runner = __webpack_require__ (1);
+	var Idea = __webpack_require__ (2);
+	var $ = __webpack_require__(3);
+	__webpack_require__(4);
+	__webpack_require__(8);
+
+	var runner = new Runner();
+	var idea = new Idea();
+
+	$(document).ready(function() {
+	  runner.fetchIdeasList();
+	  $('#btn-save').prop('disabled', true);
+	  runner.writeIdeas(runner.ideasList);
+	});
+
+	$('#title-input').on('keypress', function() {
+	  if ($(this).val() === "" || $(this).val().length > 120){
+	    $('#btn-save').prop('disabled', true);
+	  } else {
+	    $('#btn-save').prop('disabled', false);
+	  }
+	  });
+
+	  $('#nextTen').on('click', function(){
+	    $('.list-li').remove();
+	    runner.numIdeas();
+	    end = end + 10;
+	  });
+
+	  $('#btn-critical').on('click', function(){
+	    $('.list-li').remove();
+	    criticalIdeas =runner.ideasList.filter(criticalIdeas);
+	    runner.writeIdeas(criticalIdeas);
+	  });
+
+	  $('.idea-list').on('focusout', '.body-input', function(){
+	    var id = $(this).parent().attr('id');
+	    var newBody =  $(this).text();
+	    runner.updateBody(id, newBody);
+	  });
+
+	  $('.idea-list').on('keypress', '.body-input', function(event) {
+	    var id = $(this).parent().attr('id');
+	    var newBody = $(this).text();
+	    if (event.which == 13) {
+	      event.preventDefault();
+	      $(this).blur();
+	    }
+	  });
+
+	  $('.idea-list').on('focusout', '.idea-title', function(){
+	    var id = $(this).parent().attr('id');
+	    var newTitle =  $(this).text();
+	    runner.updateTitle(id, newTitle);
+	  });
+
+	  $('.idea-list').on('keypress', '.idea-title', function(event) {
+	    var id = $(this).parent().attr('id');
+	    var newTitle = $(this).text();
+	    if (event.which == 13) {
+	      event.preventDefault();
+	      $(this).blur();
+	    }
+	  });
+
+	  $('#title-input').on('keyup', function () {
+	    var newTitle =  $(this).val();
+	    charLength = newTitle.length++;
+
+	    $('#char-title').text("Character counter: " + charLength);
+	  });
+
+	  $('.idea-list').on('click', '.upvote', function() {
+	    var idea = findIdea($(this).parent().parent().attr('id'));
+	    var $quality = $(this).siblings('p');
+
+	    if ($quality.text() === 'quality: None') {
+	       $quality.text('quality: Low');
+	       idea.quality = 'Low';
+	    } else if ($quality.text() === 'quality: Low') {
+	       $quality.text('quality: Normal');
+	       idea.quality = 'Normal';
+	    } else if ($quality.text() === 'quality: Normal') {
+	       $quality.text('quality: High');
+	       idea.quality = 'High';
+	    } else if ($quality.text() === 'quality: High') {
+	       $quality.text('quality: Critical');
+	       idea.quality = 'Critical';
+	    }
+	    runner.storeIdea();
+	  });
+
+	  $('.idea-list').on('click', '.delete-idea', function(){
+	    var id = $(this).parent().attr('id');
+	    var idea =  runner.findIdea(id);
+	    runner.deleteIdeaFromStorage(idea);
+	    $(this).parent().remove();
+	  });
+
+	  $('.idea-list').on('click', '.completed-todo', function(){
+	    var id = $(this).parent().parent().attr('id');
+	    var idTag = "#" + id;
+	    var idea =  runner.findIdea(id);
+	    idea.markAsComplete(idea);
+	    $('#'+id).children().addClass('completed');
+	    runner.storeIdea();
+	  });
+
+	  $('.idea-list').on('click', '.downvote', function() {
+	    var idea = runner.findIdea($(this).parent().parent().attr('id'));
+	    var $quality = $(this).siblings('p');
+
+	    if ($quality.text() === 'quality: Critical') {
+	      $quality.text('quality: High');
+	      idea.quality = 'High';
+	    } else if ($quality.text() === 'quality: High') {
+	      $quality.text('quality: Normal');
+	      idea.quality = 'Normal';
+	    } else if ($quality.text() === 'quality: Normal') {
+	      $quality.text('quality: Low');
+	      idea.quality = 'Low';
+	    } else if ($quality.text() === 'quality: Low') {
+	      $quality.text('quality: None');
+	      idea.quality = 'None';
+	    }
+	    runner.storeIdea();
+	  });
+
+	  $('#btn-completed').on('click', function() {
+	    ideasList = JSON.parse(localStorage.getItem('ideasList')) || [];
+	    completedList = runner.ideasList.filter(completedIdeas);
+
+	    uncompletedList = runner.ideasList.filter(uncompletedIdeas);
+	    $('.list-li').remove();
+	    uncompletedList.forEach(function(idea){
+	      idea.renderUncompletedIdeaToHTML(idea);
+	    });
+	    completedList.forEach(function(idea) {
+	      idea.renderCompletedIdeaToHTML(idea);
+	    });
+
+	  });
+
+	  $( "#search-bar" ).keyup(function() {
+	    var filterWord = $(this).val();
+	    var notTheIdeasIWant = $( 'li:not(:contains(' + filterWord + '))' );
+	    var theIdeaIWant = $('li:contains(' + filterWord + ')'
+	    );
+	    theIdeaIWant.show();
+	    notTheIdeasIWant.hide();
+	  });
+
+	  $('#btn-save').on('click', function() {
+	    var $titleInput = $('#title-input').val();
+	    var $bodyInput = $('#body-input').val();
+	    runner.generateNewIdea($titleInput, $bodyInput);
+	    $('#title-input').focus();
+	  });
+
+	  $('#body-input').keypress(function(event) {
+	    if (event.which == 13) {
+	      var titleInput = $('#title-input').val();
+	      var bodyInput = $('#body-input').val();
+	      runner.generateNewIdea(titleInput, bodyInput);
+	      $('#title-input').focus();
+	    }
+	  });
 
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ideasList = [];
-	var uncompletedIdeasList = [];
-	var $ = __webpack_require__(2);
-	var end = 10;
+	var Idea = __webpack_require__(2);
+	var $ = __webpack_require__(3);
 
-	function Idea(title, body, id, quality, completed) {
-	  this.id = id || Date.now() ;
-	  this.title = title;
-	  this.body = body;
-	  this.quality = quality || 'Normal';
-	  this.completed = false;
+	function Runner() {
+	    this.ideasList = [];
+	    this.uncompletedIdeasList = [];
+	    this.idea = new Idea();
+
 	}
 
-	function clearFields() {
-	  $('#title-input').val('');
-	  $('#body-input').val('');
-	  $('#search-bar').val('');
+	    Runner.prototype.generateNewIdea = function (titleInput, bodyInput) {
+	      var idea = new Idea({title: titleInput, body: bodyInput});
+	      this.ideasList.push(idea);
+	      this.storeIdea();
+	      idea.renderUncompletedIdeaToHTML(idea);
+	      this.clearFields();
+	    };
+
+	    Runner.prototype.storeIdea = function () {
+	        localStorage.setItem("ideasList", JSON.stringify(this.ideasList));
+	    };
+
+	    Runner.prototype.clearFields = function () {
+	        $('#title-input').val('');
+	        $('#body-input').val('');
+	        $('#search-bar').val('');
+	    };
+
+	    Runner.prototype.findIdea = function (id) {
+	        return this.ideasList.find(function(idea) {
+	          return this.idea.id === parseInt(id);
+	        });
+	    };
+
+	    Runner.prototype.deleteIdeaFromStorage = function (idea) {
+	        this.ideasList = this.ideasList.filter(function(ideasToKeep) {
+	          return ideasToKeep != idea;
+	        });
+	        localStorage.removeItem(idea);
+	        this.updateIdeasList(this.ideasList);
+	    };
+
+	    Runner.prototype.updateIdeasList = function (ideasList) {
+	        localStorage.setItem('ideasList', JSON.stringify(this.ideasList));
+	        this.storeIdea();
+	    };
+
+	  Runner.prototype.updateBody = function (id, newBody) {
+	      var idea = findIdea(id);
+	      this.idea.body = newBody;
+	      this.storeIdea();
+	    };
+
+	  Runner.prototype.updateTitle = function (id, newTitle) {
+	    var foundIdea = findIdea(id);
+	    this.foundIdea.title = newTitle;
+	    this.storeIdea();
+	  };
+
+	  Runner.prototype.writeIdeas = function (ideasList) {
+	    this.ideasList.forEach(function(idea) {
+	      if (this.idea.completed === false) {
+	      this.idea.renderUncompletedIdeaToHTML(idea);
+	      }
+	    });
+	  };
+
+	    Runner.prototype.fetchIdeasList = function () {
+	      var ideasListFromStorage =  JSON.parse(localStorage.getItem('ideasList')) || [];
+	      console.log(ideasListFromStorage);
+	      ideasListFromStorage.forEach(function(idea,index){
+	        var options = {title : idea.title, body: idea.body, id: idea.id, completed: idea.completed, quality: idea.quality};
+	        console.log(this.ideasList)
+	        this.ideasList[index]= new Idea(options);
+	      });
+	    };
+
+	    Runner.prototype.numIdeas = function() {
+	      var numIdeas = this.ideasList.length;
+	      var begin = 0;
+
+	      slicedIdeas = this. ideasList.slice(begin, end);
+	      this.writeIdeas(slicedIdeas);
+	    };
+
+
+
+	module.exports = Runner;
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__ (3);
+
+	function Idea(options){
+	  options = options || {};
+	  this.title = options.title;
+	  this.body = options.body;
+	  this.id = options.id || Date.now();
+	  this.quality = options.quality || 'Normal';
+	  this.completed = options.completed || false;
 	}
 
-	function deleteIdeaFromStorage(idea) {
-	  ideasList = ideasList.filter(function(ideasToKeep) {
-	    return ideasToKeep != idea;
-	  });
-	  localStorage.removeItem(idea);
-	  updateIdeasList(ideasList);
-	}
+	Idea.prototype.markAsComplete = function () {
+	  this.completed = true;
+	};
 
-	function findIdea(id) {
-	  return ideasList.find(function(idea) {
-	    return idea.id === parseInt(id);
-	  });
-	}
+	Idea.prototype.renderUncompletedIdeaToHTML = function (idea) {
+	  $('.idea-list').prepend(
+	    `<li id=${idea.id} class="list-li uncompleted" data-completed=false >
+	    <h3 contenteditable="true" class="idea-titleuncompleted">${idea.title}</h3>
+	    <button class="delete-idea"></button>
+	    <p contenteditable="true" class="body-input"> ${idea.body}</p>
+	    <section class="uncompleted">
+	    <button class="completed-todo">COMPLETE</button>
+	    </section>
+	    <section class="vote">
+	    <button class="upvote"></button>
+	    <article class="downvote"></article>
+	    <p class="quality-control">quality: ${idea.quality}</p>
+	    </section>
+	    </li>`);
+	  };
 
-	function generateNewIdea(titleInput, bodyInput) {
-	  var idea = new Idea(titleInput, bodyInput);
-	  ideasList.push(idea);
-	  storeIdea();
-	  renderUncompletedIdeaToHTML(idea);
-	  clearFields();
-	}
-
-	function markAsComplete(idea){
-	  idea.completed = true;
-	}
-	function renderCompletedIdeaToHTML(idea) {
-
+	Idea.prototype.renderCompletedIdeaToHTML = function (idea) {
 	  $('.idea-list').prepend(
 	    `<li id=${idea.id} class="list-li completed" data-completed=true >
 	    <h3 contenteditable="true" class="idea-title completed">${idea.title}</h3>
@@ -113,224 +358,25 @@
 	    <p class="quality-control">quality: ${idea.quality}</p>
 	    </section>
 	    </li>`);
-	  }
+	  };
 
+	  Idea.prototype.criticalIdeas = function (){
+	      return idea.quality === 'Critical';
+	  };
 
-	  function renderUncompletedIdeaToHTML(idea) {
+	  Idea.prototype.completedIdeas = function () {
+	    return idea.completed === true;
+	  };
 
-	  $('.idea-list').prepend(
-	    `<li id=${idea.id} class="list-li">
-	    <h3 contenteditable="true" class="idea-title">${idea.title}</h3>
-	    <button class="delete-idea"></button>
-	    <p contenteditable="true" class="body-input"> ${idea.body}</p>
-	    <section class="completed">
-	    <button class="completed-todo">COMPLETE</button>
-	    </section>
-	    <section class="vote">
-	    <button class="upvote"></button>
-	    <article class="downvote"></article>
-	    <p class="quality-control">quality: ${idea.quality}</p>
-	    </section>
-	    </li>`);
-	  }
+	  Idea.prototype.uncompletedIdeas = function () {
+	      return idea.completed === false;
+	  };
 
-	function storeIdea() {
-	  localStorage.setItem("ideasList", JSON.stringify(ideasList));
-	}
-
-	function updateBody(id, newBody) {
-	  var idea = findIdea(id);
-	  idea.body = newBody;
-	  storeIdea();
-	}
-
-	function updateIdeasList(ideasList) {
-	  localStorage.setItem('ideasList', JSON.stringify(ideasList));
-	  storeIdea();
-	}
-
-	function updateTitle(id, newTitle) {
-	  var idea = findIdea(id);
-	  idea.title = newTitle;
-	  storeIdea();
-	}
-
-	function writeIdeas(ideasList) {
-	  ideasList.forEach(function(idea) {
-	    if (idea.completed === false) {
-	    renderUncompletedIdeaToHTML(idea);
-	    }
-	  });
-	}
-
-	function numIdeas() {
-	  var numIdeas = ideasList.length;
-	  var begin = 0;
-	  // var end = 10;
-
-	  //the button is clicked again add 10 the end variable
-
-	  slicedIdeas = ideasList.slice(begin, end);
-	  writeIdeas(slicedIdeas);
-	}
-
-	$(document).ready(function() {
-	  ideasList = JSON.parse(localStorage.getItem('ideasList')) || [];
-	  //find ideas that are not completed
-	  writeIdeas(ideasList);
-	});
-
-	$('#nextTen').on('click', function(){
-	  $('.list-li').remove();
-	  numIdeas();
-	  end = end + 10;
-	});
-
-	$('#btn-critical').on('click', function(){
-	  $('.list-li').remove();
-	  //when clicked, remove current todos
-	});
-
-
-	$('.idea-list').on('focusout', '.body-input', function(){
-	  var id = $(this).parent().attr('id');
-	  var newBody =  $(this).text();
-	  updateBody(id, newBody);
-	});
-
-	$('.idea-list').on('keypress', '.body-input', function(event) {
-	  var id = $(this).parent().attr('id');
-	  var newBody = $(this).text();
-	  if (event.which == 13) {
-	    event.preventDefault();
-	    $(this).blur();
-	  }
-	});
-
-	$('.idea-list').on('focusout', '.idea-title', function(){
-	  var id = $(this).parent().attr('id');
-	  var newTitle =  $(this).text();
-	  updateTitle(id, newTitle);
-	});
-
-	$('.idea-list').on('keypress', '.idea-title', function(event) {
-	  var id = $(this).parent().attr('id');
-	  var newTitle = $(this).text();
-	  if (event.which == 13) {
-	    event.preventDefault();
-	    $(this).blur();
-	  }
-	});
-
-	$('.idea-list').on('click', '.upvote', function() {
-	  var idea = findIdea($(this).parent().parent().attr('id'));
-	  var $quality = $(this).siblings('p');
-
-	  if ($quality.text() === 'quality: None') {
-	     $quality.text('quality: Low');
-	     idea.quality = 'Low';
-	  } else if ($quality.text() === 'quality: Low') {
-	     $quality.text('quality: Normal');
-	     idea.quality = 'Normal';
-	  } else if ($quality.text() === 'quality: Normal') {
-	     $quality.text('quality: High');
-	     idea.quality = 'High';
-	  } else if ($quality.text() === 'quality: High') {
-	     $quality.text('quality: Critical');
-	     idea.quality = 'Critical';
-	  }
-	  storeIdea();
-	});
-
-	$('.idea-list').on('click', '.delete-idea', function(){
-	  var id = $(this).parent().attr('id');
-	  var idea =  findIdea(id);
-	  deleteIdeaFromStorage(idea);
-	  $(this).parent().remove();
-	});
-
-	$('.idea-list').on('click', '.completed-todo', function(){
-	  var id = $(this).parent().parent().attr('id');
-	  var idTag = "#" + id;
-	  var idea =  findIdea(id);
-	  markAsComplete(idea);
-	  $('#'+id).children().addClass('completed');
-	  storeIdea();
-	});
-
-	$('.idea-list').on('click', '.downvote', function() {
-	  var idea = findIdea($(this).parent().parent().attr('id'));
-	  var $quality = $(this).siblings('p');
-
-	  if ($quality.text() === 'quality: Critical') {
-	    $quality.text('quality: High');
-	    idea.quality = 'High';
-	  } else if ($quality.text() === 'quality: High') {
-	    $quality.text('quality: Normal');
-	    idea.quality = 'Normal';
-	  } else if ($quality.text() === 'quality: Normal') {
-	    $quality.text('quality: Low');
-	    idea.quality = 'Low';
-	  } else if ($quality.text() === 'quality: Low') {
-	    $quality.text('quality: None');
-	    idea.quality = 'None';
-	  }
-	  storeIdea();
-	});
-
-	function completedIdeas(idea) {
-	  return idea.completed === true;
-	}
-
-	function uncompletedIdeas(idea) {
-	  return idea.completed === false;
-	}
-
-	$('#btn-completed').on('click', function() {
-	  ideasList = JSON.parse(localStorage.getItem('ideasList')) || [];
-	  completedList = ideasList.filter(completedIdeas);
-
-	  uncompletedList = ideasList.filter(uncompletedIdeas);
-	  $('.list-li').remove();
-	  uncompletedList.forEach(function(idea){
-	    renderUncompletedIdeaToHTML(idea)
-	  });
-	  completedList.forEach(function(idea) {
-	    renderCompletedIdeaToHTML(idea)
-	  });
-
-	});
-
-	$( "#search-bar" ).keyup(function() {
-	  var filterWord = $(this).val();
-	  var notTheIdeasIWant = $( 'li:not(:contains(' + filterWord + '))' );
-	  var theIdeaIWant = $('li:contains(' + filterWord + ')'
-	  );
-	  theIdeaIWant.show();
-	  notTheIdeasIWant.hide();
-	});
-
-	$('#btn-save').on('click', function() {
-	  var titleInput = $('#title-input').val();
-	  var bodyInput = $('#body-input').val();
-	  generateNewIdea(titleInput, bodyInput);
-	  $('#title-input').focus();
-	});
-
-	$('#body-input').keypress(function(event) {
-	  if (event.which == 13) {
-	    var titleInput = $('#title-input').val();
-	    var bodyInput = $('#body-input').val();
-	    generateNewIdea(titleInput, bodyInput);
-	    $('#title-input').focus();
-	  }
-	});
-
-	module.exports = ideasList;
+	module.exports = Idea;
 
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10556,16 +10602,16 @@
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(4);
+	var content = __webpack_require__(5);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -10582,10 +10628,10 @@
 	}
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
@@ -10596,7 +10642,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/*
@@ -10652,7 +10698,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -10904,16 +10950,16 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(8);
+	var content = __webpack_require__(9);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -10930,51 +10976,51 @@
 	}
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n/*** body ***/\nheader {\n  background-color: #E5F3F2; }\n\nheader h1, span {\n  font-family: 'Roboto Slab', serif;\n  font-weight: 700;\n  font-size: 40px;\n  text-align: center; }\n\nheader input {\n  height: 20px;\n  width: 500px;\n  position: absolute; }\n\nspan {\n  margin: 30px 0;\n  display: inline-block;\n  color: #6D6E71; }\n\n::-webkit-input-placeholder {\n  font-size: 14px; }\n\n.body-input {\n  font-family: 'Open Sans', sans-serif;\n  color: #939598;\n  font-size: 14px;\n  margin: 10px auto;\n  word-wrap: break-word;\n  line-height: 1.5; }\n\n.btn-header {\n  background-color: #00A79D;\n  border: none;\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin-bottom: 20px;\n  position: relative;\n  text-align: center;\n  top: 95px;\n  width: 406px; }\n\n.btn-header:hover {\n  background-color: #045E55; }\n\n.completed {\n  text-decoration: line-through; }\n\n.idea-form {\n  background-color: #E5F3F2;\n  position: relative;\n  height: 155px;\n  display: -webkit-flex;\n  -webkit-justify-content: center;\n  justify-content: center; }\n\n.idea-text {\n  color: #00A79D;\n  margin-bottom: 20px; }\n\n#title-input, #body-input, #search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/ }\n\n#body-input {\n  top: 45px;\n  width: 400px;\n  height: 20px; }\n\n/*** main ***/\nli {\n  margin: auto;\n  list-style: none;\n  width: 400px;\n  padding: 20px 0;\n  border-bottom: 2px solid #D1D3D4; }\n\nmain {\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  /*position: relative;*/\n  justify-content: center; }\n\nnav {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  margin-top: 20px; }\n\n.btn-body {\n  /*position: relative;*/\n  background-color: #00A79D;\n  border: none;\n  /*width: 406px;*/\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin: 0px 5px 20px;\n  padding: 0;\n  text-align: center;\n  top: 95px; }\n\n.btn-body:hover {\n  background-color: #045E55; }\n\n.completed-todo {\n  display: inline-block;\n  margin: 0px 10px;\n  float: right; }\n\n.delete-idea, .upvote, .downvote, .completed-todo {\n  height: 20px;\n  width: 20px;\n  display: inline-block;\n  vertical-align: bottom;\n  border: none;\n  cursor: pointer; }\n\n.delete-idea {\n  background: url(" + __webpack_require__(9) + ") no-repeat;\n  display: inline-block;\n  margin: 0;\n  float: right; }\n\n.delete-idea:hover {\n  background: url(" + __webpack_require__(10) + "); }\n\n.downvote {\n  background: url(" + __webpack_require__(11) + ") no-repeat;\n  margin-right: 12px; }\n\n.downvote:hover {\n  background: url(" + __webpack_require__(12) + "); }\n\n.idea-title {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 18px;\n  line-height: 1.25;\n  display: inline-block;\n  max-width: 250px;\n  word-wrap: break-word; }\n\n.quality-control {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 12px;\n  padding-top: 2px; }\n\n.upvote {\n  background: url(" + __webpack_require__(13) + ") no-repeat;\n  margin-right: 12px; }\n\n.upvote:hover {\n  background: url(" + __webpack_require__(14) + "); }\n\n.vote {\n  width: auto;\n  display: inline-flex; }\n\n#search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/\n  height: 20px;\n  margin-bottom: 20px; }\n\n@media (max-width: 440px) {\n  /*** header ***/\n  header h1, span {\n    font-size: 30px; }\n  header input {\n    width: 300px; }\n  span {\n    margin: 20px 0; }\n  ::-webkit-input-placeholder {\n    font-size: 16px;\n    padding: 0; }\n  .idea-form {\n    height: 195px; }\n  #title-input, #body-input, #search-bar {\n    width: 300px;\n    display: block;\n    margin: auto; }\n  #body-input {\n    height: 60px; }\n  #btn-save {\n    width: 306px;\n    font-size: 16px;\n    top: 135px; }\n  /*** main ***/\n  li {\n    width: 300px; }\n  .body-input {\n    font-size: 16px; }\n  .delete-idea, .upvote, .downvote {\n    height: 22px;\n    width: 22px; }\n  .delete-idea {\n    background: url(" + __webpack_require__(9) + ") no-repeat;\n    display: inline-block;\n    margin: 0px 10px;\n    float: right; }\n  .idea-title {\n    font-size: 20px;\n    max-width: 150px; }\n  .quality-control {\n    font-size: 14px;\n    padding-top: 4px; } }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n/*** body ***/\nheader {\n  background-color: #E5F3F2; }\n\nheader h1, span {\n  font-family: 'Roboto Slab', serif;\n  font-weight: 700;\n  font-size: 40px;\n  text-align: center; }\n\nheader input {\n  height: 20px;\n  width: 500px;\n  position: absolute; }\n\nspan {\n  margin: 30px 0;\n  display: inline-block;\n  color: #6D6E71; }\n\n::-webkit-input-placeholder {\n  font-size: 14px; }\n\n.body-input {\n  font-family: 'Open Sans', sans-serif;\n  color: #939598;\n  font-size: 14px;\n  margin: 10px auto;\n  word-wrap: break-word;\n  line-height: 1.5; }\n\n.btn-header {\n  background-color: #00A79D;\n  border: none;\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin-bottom: 20px;\n  position: relative;\n  text-align: center;\n  top: 95px;\n  width: 406px; }\n\n.btn-header:hover {\n  background-color: #045E55; }\n\n#char-title, #char-body {\n  font-size: 16px; }\n\n.completed {\n  text-decoration: line-through; }\n\n.idea-form {\n  background-color: #E5F3F2;\n  position: relative;\n  height: 155px;\n  display: -webkit-flex;\n  -webkit-justify-content: center;\n  justify-content: center; }\n\n.idea-text {\n  color: #00A79D;\n  margin-bottom: 20px; }\n\n#title-input, #body-input, #search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/ }\n\n#body-input {\n  top: 45px;\n  width: 400px;\n  height: 20px; }\n\n/*** main ***/\nli {\n  margin: auto;\n  list-style: none;\n  width: 400px;\n  padding: 20px 0;\n  border-bottom: 2px solid #D1D3D4; }\n\nmain {\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  /*position: relative;*/\n  justify-content: center; }\n\nnav {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  margin-top: 20px; }\n\n.btn-body {\n  /*position: relative;*/\n  background-color: #00A79D;\n  border: none;\n  /*width: 406px;*/\n  color: #FFFFFF;\n  cursor: pointer;\n  font-size: 14px;\n  height: 30px;\n  margin: 0px 5px 20px;\n  padding: 0;\n  text-align: center;\n  top: 95px; }\n\n.btn-body:hover {\n  background-color: #045E55; }\n\n.completed-todo {\n  display: inline-block;\n  margin: 0px 10px;\n  float: right; }\n\n.delete-idea, .upvote, .downvote, .completed-todo {\n  height: 20px;\n  width: 20px;\n  display: inline-block;\n  vertical-align: bottom;\n  border: none;\n  cursor: pointer; }\n\n.delete-idea {\n  background: url(" + __webpack_require__(10) + ") no-repeat;\n  display: inline-block;\n  margin: 0;\n  float: right; }\n\n.delete-idea:hover {\n  background: url(" + __webpack_require__(11) + "); }\n\n.downvote {\n  background: url(" + __webpack_require__(12) + ") no-repeat;\n  margin-right: 12px; }\n\n.downvote:hover {\n  background: url(" + __webpack_require__(13) + "); }\n\n.idea-title {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 18px;\n  line-height: 1.25;\n  display: inline-block;\n  max-width: 250px;\n  word-wrap: break-word; }\n\n.quality-control {\n  font-family: 'Roboto Slab', serif;\n  color: #6D6E71;\n  font-size: 12px;\n  padding-top: 2px; }\n\n.upvote {\n  background: url(" + __webpack_require__(14) + ") no-repeat;\n  margin-right: 12px; }\n\n.upvote:hover {\n  background: url(" + __webpack_require__(15) + "); }\n\n.vote {\n  width: auto;\n  display: inline-flex; }\n\n#search-bar {\n  width: 400px;\n  display: block;\n  margin: auto;\n  /*padding: 0;\n  margin: 0;*/\n  height: 20px;\n  margin-bottom: 20px; }\n\n@media (max-width: 440px) {\n  /*** header ***/\n  header h1, span {\n    font-size: 30px; }\n  header input {\n    width: 300px; }\n  span {\n    margin: 20px 0; }\n  ::-webkit-input-placeholder {\n    font-size: 16px;\n    padding: 0; }\n  .idea-form {\n    height: 195px; }\n  #title-input, #body-input, #search-bar {\n    width: 300px;\n    display: block;\n    margin: auto; }\n  #body-input {\n    height: 60px; }\n  #btn-save {\n    width: 306px;\n    font-size: 16px;\n    top: 135px; }\n  /*** main ***/\n  li {\n    width: 300px; }\n  .body-input {\n    font-size: 16px; }\n  .delete-idea, .upvote, .downvote {\n    height: 22px;\n    width: 22px; }\n  .delete-idea {\n    background: url(" + __webpack_require__(10) + ") no-repeat;\n    display: inline-block;\n    margin: 0px 10px;\n    float: right; }\n  .idea-title {\n    font-size: 20px;\n    max-width: 150px; }\n  .quality-control {\n    font-size: 14px;\n    padding-top: 4px; } }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = "\"data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 20 20' style='enable-background:new 0 0 20 20;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23D1D3D4;%7D .st1%7Bfill:%23FFFFFF;%7D %3C/style%3E %3Cg%3E %3Cg%3E %3Cellipse transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9558)' class='st0' cx='9.9' cy='10' rx='8.7' ry='8.7'/%3E %3Cg%3E %3Crect x='5.7' y='9.5' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9559)' class='st1' width='8.5' height='1'/%3E %3Crect x='9.4' y='5.7' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9559)' class='st1' width='1' height='8.5'/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E\""
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = "\"data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 20 20' style='enable-background:new 0 0 20 20;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23EF4136;%7D .st1%7Bfill:%23FFFFFF;%7D %3C/style%3E %3Cg%3E %3Cg%3E %3Cellipse transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9558)' class='st0' cx='9.9' cy='10' rx='8.7' ry='8.7'/%3E %3Cg%3E %3Crect x='5.7' y='9.5' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.956)' class='st1' width='8.5' height='1'/%3E %3Crect x='9.4' y='5.7' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.956)' class='st1' width='1' height='8.5'/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E\""
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = "\"data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 20 20' style='enable-background:new 0 0 20 20;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23D1D3D4;%7D .st1%7Bfill:%23FFFFFF;%7D %3C/style%3E %3Cg%3E %3Cg%3E %3Cellipse transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9558)' class='st0' cx='9.9' cy='10' rx='8.7' ry='8.7'/%3E %3Cg%3E %3Crect x='9.4' y='5.6' class='st1' width='1' height='7.8'/%3E %3Cg%3E %3Cpolygon class='st1' points='14,10 13.3,9.4 9.9,13 6.6,9.4 5.8,10 9.9,14.4 '/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E\""
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = "\"data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 20 20' style='enable-background:new 0 0 20 20;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23FBB040;%7D .st1%7Bfill:%23FFFFFF;%7D %3C/style%3E %3Cg%3E %3Cg%3E %3Cellipse transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9558)' class='st0' cx='9.9' cy='10' rx='8.7' ry='8.7'/%3E %3Cg%3E %3Crect x='9.4' y='5.6' class='st1' width='1' height='7.8'/%3E %3Cg%3E %3Cpolygon class='st1' points='14,10 13.3,9.4 9.9,13 6.6,9.4 5.8,10 9.9,14.4 '/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E\""
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = "\"data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 20 20' style='enable-background:new 0 0 20 20;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23D1D3D4;%7D .st1%7Bfill:%23FFFFFF;%7D %3C/style%3E %3Cg%3E %3Cg%3E %3Cellipse transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9558)' class='st0' cx='9.9' cy='10' rx='8.7' ry='8.7'/%3E %3Cg%3E %3Crect x='9.4' y='6.6' class='st1' width='1' height='7.8'/%3E %3Cg%3E %3Cpolygon class='st1' points='5.8,10 6.6,10.6 9.9,7 13.3,10.6 14,10 9.9,5.6 '/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E\""
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = "\"data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 20 20' style='enable-background:new 0 0 20 20;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%2339B54A;%7D .st1%7Bfill:%23FFFFFF;%7D %3C/style%3E %3Cg%3E %3Cg%3E %3Cellipse transform='matrix(0.7071 -0.7071 0.7071 0.7071 -4.1604 9.9558)' class='st0' cx='9.9' cy='10' rx='8.7' ry='8.7'/%3E %3Cg%3E %3Crect x='9.4' y='6.6' class='st1' width='1' height='7.8'/%3E %3Cg%3E %3Cpolygon class='st1' points='5.8,10 6.6,10.6 9.9,7 13.3,10.6 14,10 9.9,5.6 '/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E\""

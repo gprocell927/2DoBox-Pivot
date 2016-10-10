@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet"> -->
     <title>ToDo Box</title>
   </head>
   <body>
     <header>
       <h1>
-        <span class ="idea-text">idea</span><span class ="box-text">box</span>
+        <span class ="idea-text">ToDo</span><span class ="box-text">box</span>
       </h1>
       <form class="idea-form">
-        <input type="text" id="title-input" placeholder="Title">
-        <span id = "char-title">Character counter: </span>
-        <input type="text" id="body-input" placeholder="Body">
-        <span id="char-body">Character counter: </span>
-        <button type="button" id="btn-save" class="btn-header">save</button>
+        <p id = "char-title">Character counter:
+        </p>
+          <!-- <label for="input-title">Input Title</label> -->
+          <input aria-label="input title" type="text" maxlength="120" id="input-title" placeholder="Title">
+        <p id="char-body">Character counter:
+        </p>
+          <input aria-label="input body" type="text" maxlength="120" id="input-body" placeholder="Body">
+        <button type="button" disabled id="btn-save" class="btn-header">save</button>
       </form>
     </header>
     <main>
@@ -28,7 +31,7 @@
         <button type="button" id="btn-low" class="btn-body">Low</button>
         <button type="button" id="btn-none" class="btn-body">None</button>
       </nav>
-      <input id="search-bar" type="text"  placeholder="Search">
+      <input aria-label="search bar" id="search-bar" type="text"  placeholder="Search">
       <section class = "search">
       </section>
       <section class="idea-list">
