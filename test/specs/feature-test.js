@@ -47,21 +47,43 @@ describe('voting attributes', function (){
 
   it('should have a button that changes a toDos importance to critical', function() {
     browser.url('/');
-    browser.localStorage('DELETE');
-    browser.refresh();
-    var todoTitle = browser.element('#title-input');
-    var todoDescription = browser.element('#body-input');
+    var todoTitle = browser.element("#input-title");
+    var todoDescription = browser.element("#input-body");
+    var todoAppendedTitle = browser.element('.idea-titleuncompleted');
+    var todoAppendedDescription =
+    browser.element('.body-input');
+    var todoImportance = browser.element('.quality-control');
 
     todoTitle.setValue('great title');
     todoDescription.setValue('great description');
+
     browser.click('#btn-save');
-
-    var upvoteTodo = browser.element('.quality-control');
-
     browser.click('.upvote');
     browser.click('.upvote');
 
-    assert.equal(upvoteTodo, 'quality: Critical');
+    assert.equal(todoImportance.getText(), 'quality: Critical');
+    });
   });
-});
+
+  describe('completed button', function (){
+    it('will mark an idea as complete by striking through the text', function (){
+      browser.url('/');
+      var todoTitle = browser.element("#input-title");
+      var todoDescription = browser.element("#input-body");
+      var todoAppendedTitle = browser.element('.idea-titleuncompleted');
+      var todoAppendedDescription =
+      browser.element('.body-input');
+      var todoTextDecoration = browser.element('.quality-control');
+
+      todoTitle.setValue('great title');
+      todoDescription.setValue('great description');
+
+      browser.click('#btn-save');
+      browser.click('.completed-todo');
+
+
+
+    });
+
+  });
 });
